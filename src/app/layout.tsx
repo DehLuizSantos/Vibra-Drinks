@@ -23,6 +23,9 @@ const marcellus = Marcellus({
 export const metadata: Metadata = {
   title: "Vibra Drinks",
   description: "Experiências únicas em bebidas para o seu evento.",
+  icons:{
+    icon: '/Logo-mobile.svg'
+  }
 };
 
 export default function RootLayout({

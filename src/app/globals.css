@@ -9,6 +9,7 @@
 
   /* Colors */
   --color-pink-100: #F8C9E5;
+  --color-pink-300: #8D4E57;
   --color-gold: #FFB001;
   --color-black-500: #020202;
   --color-black-300: #191919;
@@ -36,6 +37,11 @@
 .noise-bg {
   position: relative;
   isolation: isolate;
+}
+
+.border-gradient-bottom {
+  border-bottom: 1px solid;
+  border-image: linear-gradient(180deg, #996A01 100%, #FFB001 10%) 1;
 }
 
 .noise-bg::after {

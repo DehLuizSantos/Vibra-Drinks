@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function HeroSectionAbout() {
   return (
-    <section className="md:flex items-center justify-between p-24">
+    <section className="md:flex items-center justify-between md:p-24">
       <div className="p-8 text-center md:text-start max-w-lg">
         <div className="text-4xl text-pink-100 display-font md:text-5xl">
           <p>VIBRA</p>
@@ -17,9 +17,9 @@ export default function HeroSectionAbout() {
           Alto padrão não é uma exigência, é o nosso ponto de partida
         </h2>
       </div>
-      <div className="relative w-80 h-80 mx-auto md:w-[712px] md:h-[712px] border-b-2 border-gold rounded-full">
+      <div className="relative w-80 h-80 mx-auto md:w-178 md:h-178 border-b-2 border-gold rounded-full">
         <Image
-          src="/images/secction1.png"
+          src="/images/section1.png"
           alt="Alto padrão não é uma exigência, é o nosso ponto de partida"
           fill
           className="object-cover"

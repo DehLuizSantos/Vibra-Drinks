@@ -12,33 +12,38 @@ export default function SectionService() {
     "Maxima entrega, com investimento inteligente"
   ];
   return (
-    <section>
-      <div className="text-center">
-        <div className="border-gradient-bottom text-center">
-          <h2 className="text-2xl px-4 text-pink-100 py-8 display-font">
-            Valor acessível Qualidade de excelencia
-          </h2>
+    <section className="md:p-24">
+      <div className="md:flex align-center justify-between gap-10 text-center md:text-start">
+        <div className="text-center md:text-start md:w-138] ">
+          <div className="border-gradient-bottom ">
+            <h2 className="text-2xl px-4 text-pink-100 py-8 display-font md:text-4xl md:w-135  md:px-0">
+              Valor acessível Qualidade de excelencia
+            </h2>
+          </div>
+          <p className="px-3.5 py-8 text-white-500 display-marcellus md:text-2xl md:px-0 md:w-135md:py-3.5">
+            Flexibilizamos para você fechar negocio sem preocupações
+          </p>
+          <div className="w-full h-55 relative md:h-112.5 md:w-170">
+            <Image
+              src="/images/section2.png"
+              alt="drinks com alma"
+              fill
+              className="object-contain"
+            />
+          </div>
         </div>
-        <p className="px-3.5 py-8  display-marcellus">
-          Flexibilizamos para você fechar negocio sem preocupações
-        </p>
-        <div className="w-full h-55 relative">
-          <Image
-            src="/images/section2.png"
-            alt="drinks com alma"
-            fill
-            className="object-contain"
-          />
-        </div>
-        <div className="p-7 ">
-          <h3 className="my-3 text-3xl text-white-500 display-marcellus">
-            Nosso jeito de servir
-          </h3>
-          <ol className="my-3.5">
-            {serviceList.map(list =>
-              <ListServiceItem key={list} item={list} />
-            )}
-          </ol>
+
+        <div className="p-7 md:flex flex-col align-start justify-between column ">
+          <div className="">
+            <h3 className="my-3 text-3xl text-white-500 display-marcellus">
+              Nosso jeito de servir
+            </h3>
+            <ol className="my-3.5">
+              {serviceList.map(list =>
+                <ListServiceItem key={list} item={list} />
+              )}
+            </ol>
+          </div>
           <ButtonCta />
         </div>
       </div>

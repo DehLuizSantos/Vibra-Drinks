@@ -20,7 +20,8 @@ export default function MenuOpiniao() {
     <div className="flex items-center justify-around my-3.5">
       {menuOptions.map(menu =>
         <div
-          className={`rounded-full 
+          className={`rounded-full
+            cursor-pointer
             ${menuType === menu.value ? "border-3" : "border"}
             ${menuType === menu.value &&
               "drop-shadow-[0_5px_5px_rgba(255,176,1,0.4)]"}

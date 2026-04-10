@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Divider from "@/components/atoms/divider";
+import { useStore } from "zustand";
+import { useAppMenuStore } from "@/store/useMenuStore";
 
 export type CardItem = {
   name: string;
@@ -11,18 +13,15 @@ export type CardItem = {
   description: string;
 };
 
-export interface CardClientOpinionProps {
-  items: CardItem[];
-}
-
 const typeLabels: Record<CardItem["type"], string> = {
   casamento: "Casamento",
   corporativos: "Corporativos",
   intimos: "Íntimos"
 };
 
-export default function CardClientOpinion({ items }: CardClientOpinionProps) {
+export default function CardClientOpinion() {
   const [current, setCurrent] = useState(0);
+  const { items } = useStore(useAppMenuStore);
 
   const prev = () => setCurrent(i => (i - 1 + items.length) % items.length);
   const next = () => setCurrent(i => (i + 1) % items.length);

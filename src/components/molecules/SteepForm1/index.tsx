@@ -27,8 +27,8 @@ export function StepForm1() {
   };
 
   return (
-    <div className="">
-      <div className="md:flex gap-8.5 md:w-107.5">
+    <div className="w-full">
+      <div className="w-full md:flex gap-4 md:w-107.5">
         <Field label="Nome">
           <input
             ref={nameInputRef}

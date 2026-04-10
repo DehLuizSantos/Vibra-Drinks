@@ -8,7 +8,7 @@ export function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col display-font text-white-500 w-full max-w-61">
+    <div className="flex flex-col display-font text-white-500 w-full md:w-full">
       <label className={labelClass}>
         {label}
       </label>

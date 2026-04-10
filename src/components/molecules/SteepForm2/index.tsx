@@ -16,56 +16,60 @@ export function StepForm2() {
   return (
     <div className="md:flex flex-wrap max-w-160 gap-3.5">
       {/* Linha 1: Tipo de Evento + Número de Convidados */}
-      <Field label="Tipo de Evento">
-        <select
-          className={inputClass}
-          value={step2.tipoEvento}
-          onChange={e => handleChange("tipoEvento", e.target.value)}
-        >
-          <option value="">Selecione...</option>
-          <option value="casamento">Casamento</option>
-          <option value="corporativo">Corporativo</option>
-          <option value="intimo">Íntimo</option>
-        </select>
-      </Field>
+      <div className="md:flex w-full gap-5">
+        <Field label="Tipo de Evento">
+          <select
+            className={inputClass}
+            value={step2.tipoEvento}
+            onChange={e => handleChange("tipoEvento", e.target.value)}
+          >
+            <option value="">Selecione...</option>
+            <option value="casamento">Casamento</option>
+            <option value="corporativo">Corporativo</option>
+            <option value="intimo">Íntimo</option>
+          </select>
+        </Field>
 
-      <Field label="Número de Convidados">
-        <input
-          type="number"
-          placeholder="Ex: 150"
-          className={inputClass}
-          value={step2.numeroConvidados}
-          onChange={e => handleChange("numeroConvidados", e.target.value)}
-          min="0"
-          step="1"
-        />
-      </Field>
+        <Field label="Número de Convidados">
+          <input
+            type="number"
+            placeholder="Ex: 150"
+            className={inputClass}
+            value={step2.numeroConvidados}
+            onChange={e => handleChange("numeroConvidados", e.target.value)}
+            min="0"
+            step="1"
+          />
+        </Field>
+      </div>
 
       {/* Linha 2: Data do Evento + Duração do Evento (Select) */}
-      <Field label="Data do Evento">
-        <input
-          type="date"
-          className={inputClass}
-          value={step2.dataEvento}
-          onChange={e => handleChange("dataEvento", e.target.value)}
-        />
-      </Field>
+      <div className="md:flex w-full gap-5">
+        <Field label="Data do Evento">
+          <input
+            type="date"
+            className={inputClass}
+            value={step2.dataEvento}
+            onChange={e => handleChange("dataEvento", e.target.value)}
+          />
+        </Field>
 
-      <Field label="Duração do Evento (horas)">
-        <select
-          className={inputClass}
-          value={step2.duracaoEvento}
-          onChange={e => handleChange("duracaoEvento", e.target.value)}
-        >
-          <option value="">Selecione...</option>
-          {duracaoOptions.map(horas =>
-            <option key={horas} value={horas}>
-              {horas} horas
-            </option>
-          )}
-        </select>
-      </Field>
-      <div className="md:flex flex-col-reverse-reverse w-full gap-5 ">
+        <Field label="Duração do Evento (horas)">
+          <select
+            className={inputClass}
+            value={step2.duracaoEvento}
+            onChange={e => handleChange("duracaoEvento", e.target.value)}
+          >
+            <option value="">Selecione...</option>
+            {duracaoOptions.map(horas =>
+              <option key={horas} value={horas}>
+                {horas} horas
+              </option>
+            )}
+          </select>
+        </Field>
+      </div>
+      <div className="md:flex flex-col-reverse-reverse items-center w-full gap-5 ">
         {/* Linha 3: Possui Local para o Evento + Local (bloqueado se "não") */}
         <Field label="Possui Local para o Evento">
           <div className="flex gap-6 mt-2">

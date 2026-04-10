@@ -13,7 +13,7 @@ export default function HeroSectionAbout() {
           SERVIÇO DE BARMAN ESPECIALIZADO EM EVENTOS PESSOAIS E CORPORATIVOS
         </h1>
         <Divider />
-        <h2 className="display-marcellus text-[22px] bg-[linear-gradient(180deg,#996A01_100%,#FFB001_10%)] bg-clip-text text-transparent ">
+        <h2 className="display-marcellus text-[22px]  text-gold">
           Alto padrão não é uma exigência, é o nosso ponto de partida
         </h2>
       </div>

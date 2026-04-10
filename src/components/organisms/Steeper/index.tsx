@@ -3,6 +3,7 @@
 import { StepForm1 } from "@/components/molecules/SteepForm1";
 import { StepForm2 } from "@/components/molecules/SteepForm2";
 import { StepForm3 } from "@/components/molecules/SteepForm3";
+import Image from "next/image";
 import { useState } from "react";
 
 const steps = [
@@ -24,9 +25,36 @@ export default function Steeper() {
   const scrollContainerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const readImage = () => {
+    const images = [
+      {
+        image: "/images/orcamento/section1.png",
+        alt: "Drinks"
+      },
+      {
+        image: "/images/orcamento/section2.png",
+        alt: "Drinks"
+      },
+      {
+        image: "/images/orcamento/section3.png",
+        alt: "Drinks"
+      }
+    ];
+
+    return images[currentStep - 1];
+  };
+
   return (
     <div className="w-full relative">
-      {/* Step navigation - Carrossel */}
+      <div className="mx-auto ">
+        <Image
+          src={readImage().image}
+          width={333}
+          height={346}
+          alt={readImage().alt}
+          className="mx-auto my-8"
+        />
+      </div>
       <div
         ref={scrollContainerRef}
         className="flex items-start gap-4 overflow-x-auto p-4"

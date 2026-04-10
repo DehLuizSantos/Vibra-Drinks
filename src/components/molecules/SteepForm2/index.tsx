@@ -1,7 +1,7 @@
 import { Field } from "@/components/atoms/Field";
 
 export const inputClass =
-  "w-full bg-black-300 rounded-lg px-4 py-3 text-white-500 display-marcellus text-sm focus:outline-none focus:border-gold transition-colors";
+  "w-full rounded-lg px-4 py-3 border-2 border-gold text-white-500 display-marcellus  text-sm transition-colors";
 
 export function StepForm2() {
   return (

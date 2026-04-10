@@ -1,5 +1,5 @@
 import { Field } from "@/components/atoms/Field";
-import { inputClass } from "@/components/organisms/Steeper";
+import { inputClass } from "../SteepForm2";
 
 export function StepForm1() {
   return (

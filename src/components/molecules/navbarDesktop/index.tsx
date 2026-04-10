@@ -1,29 +1,61 @@
+"use client";
+
 import Link from "next/link";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { useActiveSection } from "@/hooks/useActiveSection";
 
 export default function NavbarDesktop() {
+  const { handleNavigation } = useSmoothScroll();
+  const activeSection = useActiveSection({
+    sections: ["sobre", "servicos", "opiniao"],
+    offset: 100
+  });
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    handleNavigation(targetId, "/", 80);
+  };
+
+  const getLinkClass = (sectionId: string) => {
+    const baseClass =
+      "text-white-300 display-font hover:text-gold transition-colors text-sm tracking-wider cursor-pointer pb-2";
+    const activeClass =
+      activeSection === sectionId
+        ? "text-gold border-b-2 border-gold"
+        : "border-b-2 border-transparent hover:border-gold/50";
+
+    return `${baseClass} ${activeClass}`;
+  };
+
   return (
     <nav className="hidden md:flex items-center gap-20">
-      <Link
+      <a
         href="#sobre"
-        className="text-white-300 display-font hover:text-gold transition-colors text-sm  tracking-wider "
+        onClick={e => handleClick(e, "sobre")}
+        className={getLinkClass("sobre")}
       >
-        Sobre nôs
-      </Link>
-      <Link
+        Sobre nós
+      </a>
+      <a
         href="#servicos"
-        className="text-white-300 display-font hover:text-gold transition-colors text-sm  tracking-wider"
+        onClick={e => handleClick(e, "servicos")}
+        className={getLinkClass("servicos")}
       >
         Nossos serviços
-      </Link>
-      <Link
+      </a>
+      <a
         href="#opiniao"
-        className="text-white-300 display-font hover:text-gold transition-colors text-sm  tracking-wider"
+        onClick={e => handleClick(e, "opiniao")}
+        className={getLinkClass("opiniao")}
       >
         Nossos clientes
-      </Link>
+      </a>
       <Link
         href="/orcamento"
-        className="bg-black-500 display-font text-pink-100 p-15 text-sm font-bold   hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
+        className="bg-black-500 display-font text-pink-100 px-6 py-2 text-sm font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
       >
         Solicitar Orçamento
       </Link>

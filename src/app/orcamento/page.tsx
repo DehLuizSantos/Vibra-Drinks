@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function OrcamentoPage() {
 
   return (
-    <section className="noise-bg  bg-black-500 text-white-500 md:py-40  relative border-r-2 border-l-2 border-gold md:p-24 ">
+    <section className="noise-bg  bg-black-500 text-white-500 md:py-15  relative border-r-2 border-l-2 border-gold md:p-24 ">
       <div className="max-w-360 mx-auto">
 
       <div className="border-gradient-bottom text-center md:text-start max-w-3xl" >

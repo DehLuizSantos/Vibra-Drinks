@@ -9,7 +9,7 @@ export default function Footer() {
           <h3 className="display-marcellus text-white-300">Redes sociais</h3>
           <div className="border-white-500 border w-full my-4 md:w-80" />
           <div className="flex justify-start gap-6">
-            <Link
+            {/*   <Link
               href={"https://www.instagram.com/vibradrinks_/"}
               target="_blank"
               rel="noopener noreferrer"
@@ -20,7 +20,7 @@ export default function Footer() {
                 width={30}
                 height={30}
               />
-            </Link>
+            </Link> */}
             <Link
               href={"https://www.instagram.com/vibradrinks_/"}
               target="_blank"
@@ -33,7 +33,7 @@ export default function Footer() {
                 height={30}
               />
             </Link>
-            <Link
+            {/* <Link
               href={"https://www.instagram.com/vibradrinks_/"}
               target="_blank"
               rel="noopener noreferrer"
@@ -44,7 +44,7 @@ export default function Footer() {
                 width={30}
                 height={30}
               />
-            </Link>
+            </Link> */}
           </div>
         </section>
         <section className="mt-9 md:mt-0">
@@ -56,7 +56,7 @@ export default function Footer() {
                 TELEFONE:{" "}
               </span>
               <span className="text-white-500 display-marcellus text-sm">
-                +55 11 991857180
+                +55 11 94641-9170
               </span>
             </div>
             <div className="my-4">
@@ -64,7 +64,7 @@ export default function Footer() {
                 EMAIL:{" "}
               </span>
               <span className="text-white-500 display-marcellus text-sm">
-                vibradrinks@outlook.com
+                vibradrinksbar@gmail.com
               </span>
             </div>
             <div className="">
@@ -72,7 +72,7 @@ export default function Footer() {
                 ENDEREÇO:{" "}
               </span>
               <span className="text-white-500 display-marcellus text-sm">
-                alameda olga 180, barra funda SP/SP
+                Rua Calixto de almeida, 785
               </span>
             </div>
           </div>

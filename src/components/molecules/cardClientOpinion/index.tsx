@@ -65,7 +65,7 @@ export default function CardClientOpinion() {
         {/* Description — vertically centered */}
         <div className="flex-1 flex items-start pt-8 justify-center">
           <p className="display-marcellus text-white-500 text-center text-xs leading-relaxed">
-            &ldquo;{card.description}&rdquo;
+            &ldquo;{card?.description}&rdquo;
           </p>
         </div>
       </div>

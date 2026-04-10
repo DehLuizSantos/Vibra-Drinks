@@ -18,6 +18,16 @@
   --color-white-300: #EAE9EE;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fallback para navegadores que não suportam smooth scroll */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
 
 .display-font {
   font-family: "Dela Gothic One", sans-serif;

@@ -43,7 +43,7 @@ export const generateWhatsAppMessage = (data: FormData): string => {
   const { step1, step2, step3 } = data;
 
   // Formatação da mensagem
-  let message = "🍸 *NOVO ORÇAMENTO - HOUSI BAR* 🍸\n\n";
+  let message = "🍸 *NOVO ORÇAMENTO - Vibra Drinks* 🍸\n\n";
   message += "━─━─━━─━─━━─━─━─━─\n";
   message += "*📋 INFORMAÇÕES PESSOAIS*\n";
   message += "━─━─━━─━─━━─━─━─━─\n";

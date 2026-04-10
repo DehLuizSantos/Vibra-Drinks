@@ -9,6 +9,7 @@ import { useAppMenuStore } from "@/store/useMenuStore";
 export type CardItem = {
   name: string;
   type: "casamento" | "corporativos" | "intimos";
+  eventDescription:string;
   image: string;
   description: string;
 };
@@ -39,8 +40,8 @@ export default function CardClientOpinion() {
     >
       {/* Background image */}
       <Image
-        src={card.image}
-        alt={card.name}
+        src={card?.image}
+        alt={card?.name}
         fill
         className="object-cover opacity-40"
       />
@@ -53,15 +54,16 @@ export default function CardClientOpinion() {
         <div className="text-center">
           {/* Name / Divider / Type */}
           <p className="display-font text-white-500 text-base">
-            {card.name}
+            {card?.name}
           </p>
           <Divider />
           <p className="display-marcellus text-gold text-sm uppercase tracking-widest">
-            {typeLabels[card.type]}
+            {card?.eventDescription}
           </p>
+          <p>⭐⭐⭐⭐⭐</p>         
         </div>
         {/* Description — vertically centered */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-start pt-8 justify-center">
           <p className="display-marcellus text-white-500 text-center text-xs leading-relaxed">
             &ldquo;{card.description}&rdquo;
           </p>

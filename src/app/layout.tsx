@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`${delaGothicOne.variable} ${marcellus.variable} antialiased`}
       >
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main >{children}</main>
         <Footer />
       </body>
     </html>

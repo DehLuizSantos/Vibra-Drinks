@@ -3,7 +3,6 @@ import { handlePhoneChange, handlePhoneKeyDown } from "@/utils/masks";
 import { useEffect, useRef } from "react";
 import { useFormStore } from "@/store/useFormOrcamentoStore";
 import { inputClass } from "@/components/organisms/Steeper";
-import Link from "next/link";
 
 export function StepForm1() {
   const nameInputRef = useRef<HTMLInputElement>(null);

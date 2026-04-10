@@ -3,11 +3,8 @@
 import ButtonCta from "@/components/molecules/buttonCta";
 import CardClientOpinion from "@/components/molecules/cardClientOpinion";
 import MenuOpiniao from "@/components/molecules/menuOpiniao";
-import { useAppMenuStore } from "@/store/useMenuStore";
 
 export default function SectionOpinion() {
-  const { menuType, setMenuType } = useAppMenuStore();
-
   return (
     <section className="md:p-24">
       <div className="md:flex align-center justify-around text-center md:text-start gap-10">

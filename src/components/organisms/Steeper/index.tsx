@@ -27,7 +27,6 @@ const stepForms = [
 export default function Steeper() {
   const { currentStep, setCurrentStep, step1, step2, step3, stepErrors, setStepErrors, clearStepErrors } = useFormStore();
   const scrollContainerRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
 
   const readImage = () => {
@@ -125,7 +124,6 @@ export default function Steeper() {
           ref={scrollContainerRef}
           className="flex items-start gap-4 overflow-x-auto p-4 md:p-0 md:mb-12"
           style={{
-            cursor: isDragging ? "grabbing" : "grab",
             WebkitOverflowScrolling: "touch"
           }}
         >
@@ -194,7 +192,7 @@ export default function Steeper() {
             <div className="mb-6 p-4 bg-red-500/10 border border-red-500 rounded-lg">
               <p className="text-red-500 font-bold mb-2">Por favor, corrija os seguintes erros:</p>
               <ul className="list-disc list-inside">
-                {stepErrors[currentStep]?.map((error: any, idx: any) => (
+                {stepErrors[currentStep]?.map((error, idx) => (
                   <li key={idx} className="text-red-400 text-sm">{error}</li>
                 ))}
               </ul>

@@ -18,6 +18,16 @@
   --color-white-300: #EAE9EE;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fallback para navegadores que não suportam smooth scroll */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
 
 .display-font {
   font-family: "Dela Gothic One", sans-serif;
@@ -56,4 +66,46 @@
   background-size: 300px 300px;
 }
 
+
+select {
+  appearance: none;
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  cursor: pointer;
+}
+
+/* Estilização do dropdown (as opções) */
+select option {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+}
+
+select option:hover,
+select option:focus,
+select option:active {
+  background-color: #3a3a3a !important;
+}
+
+/* Remove o fundo branco do select quando autofill */
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Estilização do calendário para input date */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0.8);
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Estilização do calendário dropdown */
+::-webkit-calendar-picker {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
 

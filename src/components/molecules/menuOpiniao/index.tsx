@@ -1,39 +1,36 @@
+// components/molecules/menuOpiniao.tsx
 "use client";
-import { useAppMenuStore } from "@/store/useMenuStore";
-import { useStore } from "zustand";
 
-type MenuOpiniaoProp = {
-  value: "casamento" | "corporativos" | "intimos";
-  label: string;
-};
+import { useAppMenuStore } from "@/store/useMenuStore";
+
+const menuItems = [
+  { id: "casamento", label: "Casamentos" },
+  { id: "corporativos", label: "Corporativos" },
+  { id: "intimos", label: "Íntimos" }
+] as const;
 
 export default function MenuOpiniao() {
-  const menuOptions: MenuOpiniaoProp[] = [
-    { value: "casamento", label: "CASAMENTOS" },
-    { value: "corporativos", label: "EVENTOS CORPORATIVOS" },
-    { value: "intimos", label: "EVENTOS INTIMOS" }
-  ];
-
-  const { menuType, setMenuType } = useStore(useAppMenuStore);
+  const { menuType, setMenuType } = useAppMenuStore();
 
   return (
-    <div className="flex items-center justify-around my-3.5">
-      {menuOptions.map(menu =>
-        <div
-          className={`rounded-full
-            cursor-pointer
-            ${menuType === menu.value ? "border-3" : "border"}
-            ${menuType === menu.value &&
-              "drop-shadow-[0_5px_5px_rgba(255,176,1,0.4)]"}
-             border-gold w-23 h-23 md:w-36.5 md:h-36.5 flex items-center justify-center   `}
-          key={menu.value}
-          onClick={() => setMenuType(menu.value)}
+    <div className="flex justify-center md:justify-start gap-2 md:gap-4 flex-wrap my-9">
+      {menuItems.map(({ id, label }) => (
+        <button
+          key={id}
+          onClick={() => setMenuType(id)}
+          className={`cursor-pointer w-29 md:w-50
+            px-4 md:px-6 py-2 md:py-3 rounded-full transition-all duration-300
+            display-marcellus text-sm md:text-base font-medium
+            ${menuType === id 
+              ? "bg-gold text-black shadow-lg shadow-gold/20" 
+              : "bg-transparent border border-gold text-gold hover:bg-gold/10 hover:scale-105"
+            }
+          `}
         >
-          <p className="text-xs display-marcellus text-gold text-center  p-1">
-            {menu.label}
-          </p>
-        </div>
-      )}
+        
+          {label}
+        </button>
+      ))}
     </div>
   );
 }

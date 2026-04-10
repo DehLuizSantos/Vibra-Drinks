@@ -6,9 +6,21 @@ import Image from "next/image";
 import MenuBurguer from "@/components/atoms/menuBurguer";
 import NavbarMobile from "@/components/molecules/navbarMobile";
 import NavbarDesktop from "@/components/molecules/navbarDesktop";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { isMenuOpen, toggleMenu } = useAppStore();
+   const [, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    const header = document.querySelector('header');
+    if (header) {
+      setHeaderHeight(header.offsetHeight);
+      // Adiciona CSS custom property para o offset
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    }
+  }, []);
+
 
   return (
     <header className="bg-black-300 text-white-500 sticky top-0 rouded-lg z-50 border-gold border-2 ">

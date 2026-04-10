@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import { validateStep } from "@/utils/formValidation";
 import { useFormStore } from "@/store/useFormOrcamentoStore";
+import { sendToWhatsApp } from "@/utils/sendTowhatsApp";
 
 export const inputClass =
   "w-full rounded-lg px-4 py-3 border-2 border-gold text-white-500 display-marcellus text-sm transition-colors";
@@ -89,32 +90,24 @@ export default function Steeper() {
   };
 
   // Função para o botão "Próximo"
-  const handleNext = () => {
-    if (currentStep < steps.length) {
-      handleStepChange(currentStep + 1);
+ const handleNext = () => {
+  if (currentStep < steps.length) {
+    handleStepChange(currentStep + 1);
+  } else {
+    // Se for o último step, validar e enviar
+    const finalValidation = validateStep(3, step3);
+    if (finalValidation.isValid) {
+      // Envia os dados para o WhatsApp
+      const formData = { step1, step2, step3 };
+      sendToWhatsApp(formData);
     } else {
-      // Se for o último step, submeter o formulário
-      const finalValidation = validateStep(3, step3);
-      if (finalValidation.isValid) {
-        console.log('Formulário completo:', { step1, step2, step3 });
-        alert('Formulário enviado com sucesso!');
-      } else {
-        setStepErrors(3, finalValidation.errors);
-        setShowErrors(true);
-      }
+      setStepErrors(3, finalValidation.errors);
+      setShowErrors(true);
     }
-  };
+  }
+};
 
-  // Função para o botão "Voltar"
-  const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-      setShowErrors(false);
-      clearStepErrors(currentStep);
-    }
-  };
-
-  // Verifica se o step atual tem erros
+   // Verifica se o step atual tem erros
   const hasErrors = stepErrors[currentStep] && stepErrors[currentStep].length > 0;
 
   return (
@@ -211,7 +204,7 @@ export default function Steeper() {
           {stepForms[currentStep - 1]}
           
           {/* Botões de navegação */}
-          <div className="flex justify-between mt-8 gap-4 max-w-150">          
+          <div className="flex justify-between mt-8 gap-4 w-full">         
             
             <button
               onClick={handleNext}

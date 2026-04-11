@@ -19,7 +19,7 @@ export default function SectionOpinion() {
           </p>
           <div className="w-full md:w-170">
             <MenuOpiniao />
-            <div className="hidden md:block pt-8">
+            <div className="hidden md:block pt-28">
               <ButtonCta />
             </div>
           </div>

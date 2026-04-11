@@ -36,11 +36,11 @@ export default function Home() {
         {/* CTA Section - Scale com bounce */}
         <section id="opiniao" className="py-60 scroll-mt-20">
           <AnimateOnScroll
-            variant="slide"
-            duration={700}
+            variant="fade"
+            duration={500}
             delay={100}
             threshold={0.25}
-            once={false}
+            once={true}
           >
             <SectionOpinion />
           </AnimateOnScroll>

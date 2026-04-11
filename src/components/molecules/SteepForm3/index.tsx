@@ -1,6 +1,7 @@
 import { Field } from "@/components/atoms/Field";
 import { MultiSelect } from "@/components/atoms/MultiSelect";
 import { inputClass } from "@/components/organisms/Steeper";
+import { drinksDescriptions, drinksFieldTooltipMessage } from "@/constants";
 import { useFormStore } from "@/store/useFormOrcamentoStore";
 
 export function StepForm3() {
@@ -36,29 +37,29 @@ export function StepForm3() {
     "Açúcar Demerara"
   ];
 
-  // Lista completa de drinks (sem categorias)
+  // Lista de drinks com suas descrições
   const drinksOptions = [
-    "Vibrante (Autoral)",
-    "Aperol Spritz",
-    "Cosmopolitan",
-    "Fitzgerald",
-    "Margarita",
-    "Mojito",
-    "Muscle Mule",
-    "Negroni",
-    "Sex on the Beach",
-    "Whiskey Sour",
-    "Batidas",
-    "Espanhola",
-    "Maracujack",
-    "Piña Colada",
-    "Gin & Tônica Tradicional",
-    "Gin & Tônica Frutas Vermelhas",
-    "Gin & Tônica Cítrico",
-    "Gin & Tônica Lichia",
-    "Gin & Tônica Maçã Verde",
-    "Gin & Tônica Tinto",
-    "Caipirinha"
+    { name: "Vibrante (Autoral)", description: drinksDescriptions["Vibrante (Autoral)"] },
+    { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
+    { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
+    { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
+    { name: "Margarita", description: drinksDescriptions["Margarita"] },
+    { name: "Mojito", description: drinksDescriptions["Mojito"] },
+    { name: "Muscle Mule", description: drinksDescriptions["Muscle Mule"] },
+    { name: "Negroni", description: drinksDescriptions["Negroni"] },
+    { name: "Sex on the Beach", description: drinksDescriptions["Sex on the Beach"] },
+    { name: "Whiskey Sour", description: drinksDescriptions["Whiskey Sour"] },
+    { name: "Batidas", description: drinksDescriptions["Batidas"] },
+    { name: "Espanhola", description: drinksDescriptions["Espanhola"] },
+    { name: "Maracujack", description: drinksDescriptions["Maracujack"] },
+    { name: "Piña Colada", description: drinksDescriptions["Piña Colada"] },
+    { name: "Gin & Tônica Tradicional", description: drinksDescriptions["Gin & Tônica Tradicional"] },
+    { name: "Gin & Tônica Frutas Vermelhas", description: drinksDescriptions["Gin & Tônica Frutas Vermelhas"] },
+    { name: "Gin & Tônica Cítrico", description: drinksDescriptions["Gin & Tônica Cítrico"] },
+    { name: "Gin & Tônica Lichia", description: drinksDescriptions["Gin & Tônica Lichia"] },
+    { name: "Gin & Tônica Maçã Verde", description: drinksDescriptions["Gin & Tônica Maçã Verde"] },
+    { name: "Gin & Tônica Tinto", description: drinksDescriptions["Gin & Tônica Tinto"] },
+    { name: "Caipirinha", description: drinksDescriptions["Caipirinha"] }
   ];
 
   const handleChange = (field: string, value: string) => {
@@ -75,22 +76,21 @@ export function StepForm3() {
     : [];
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       {/* Tipo de Copos e Taças */}
       <div className="md:flex w-full gap-4 my-4">
         <Field label="Tipo de Copos e Taças">
           <select
             className={inputClass}
             value={step3["Tipo de Copos e Taças"] || ""}
-            onChange={e =>
-              handleChange("Tipo de Copos e Taças", e.target.value)}
+            onChange={e => handleChange("Tipo de Copos e Taças", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {coposOptions.map(option =>
+            {coposOptions.map(option => (
               <option key={option} value={option}>
                 {option}
               </option>
-            )}
+            ))}
           </select>
         </Field>
 
@@ -102,11 +102,11 @@ export function StepForm3() {
             onChange={e => handleChange("Tipo de Bar", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {barOptions.map(option =>
+            {barOptions.map(option => (
               <option key={option} value={option}>
                 {option}
               </option>
-            )}
+            ))}
           </select>
         </Field>
       </div>
@@ -120,18 +120,18 @@ export function StepForm3() {
             onChange={e => handleChange("Quantidade de Drinks", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {quantidadeDrinksOptions.map(option =>
+            {quantidadeDrinksOptions.map(option => (
               <option key={option} value={option}>
                 {option}
               </option>
-            )}
+            ))}
           </select>
         </Field>
 
         {/* Tags Personalizadas */}
-        <Field label="Tags Personalizadas">
+        <Field label="Tags Personalizadas" hasTooltip tooltipMessage="Frases divertidas que enfeitam os copos e taças" tooltipPosition="left">
           <div className="flex gap-6 mt-2">
-            {tagsOptions.map(option =>
+            {tagsOptions.map(option => (
               <label
                 key={option}
                 className="flex items-center gap-2 display-marcellus text-white-500 text-sm cursor-pointer"
@@ -141,45 +141,44 @@ export function StepForm3() {
                   name="tagsPersonalizadas"
                   value={option}
                   checked={step3["Tags Personalizadas"] === option}
-                  onChange={e =>
-                    handleChange("Tags Personalizadas", e.target.value)}
+                  onChange={e => handleChange("Tags Personalizadas", e.target.value)}
                   className="accent-gold"
                 />
                 {option}
               </label>
-            )}
+            ))}
           </div>
         </Field>
       </div>
+
       <div className="md:flex gap-4 my-4 w-full">
-        <Field label="Tipo de Xarope / Açúcar">
+        <Field label="Tipo de Xarope / Açúcar" hasTooltip tooltipMessage="Açucar refinado (Xarope de açucar comum) ou Açucar Demerara (contém mais minerais e é mais benéfico para a saúde)" tooltipPosition="left">
           <select
             className={inputClass}
             value={step3["Tipo de Xarope / Açúcar"] || ""}
-            onChange={e =>
-              handleChange("Tipo de Xarope / Açúcar", e.target.value)}
+            onChange={e => handleChange("Tipo de Xarope / Açúcar", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {acucarOptions.map(option =>
+            {acucarOptions.map(option => (
               <option key={option} value={option}>
                 {option}
               </option>
-            )}
+            ))}
           </select>
         </Field>
 
-        {/* Selecione seus Drinks - MultiSelect (ocupa as duas colunas) */}
-
+        {/* Selecione seus Drinks - MultiSelect */}
         <MultiSelect
           label="Selecione seus Drinks"
           options={drinksOptions}
           value={selectedDrinks}
           onChange={handleMultiSelectChange}
           placeholder="Buscar e selecionar drinks..."
+          tooltipMessage={drinksFieldTooltipMessage}
         />
       </div>
-      {/* Tipo de Xarope / Açúcar */}
 
+      {/* Observações */}
       <div className="w-full">
         <Field label="Observações">
           <textarea

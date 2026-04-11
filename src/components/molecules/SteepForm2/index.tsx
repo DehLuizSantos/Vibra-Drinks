@@ -11,7 +11,7 @@ export function StepForm2() {
     updateStep2({ [field]: value });
   };
 
-  const duracaoOptions = ["4", "6", "8", "10", "12"];
+  const duracaoOptions = ["4", "8", "10", "12"];
 
   return (
     <div className="md:flex flex-wrap max-w-160 gap-3.5">

@@ -32,13 +32,13 @@ export function StepForm3() {
 
   // Opções para Tipo de Xarope / Açúcar
   const acucarOptions = [
-    "Açúcar refinado (Xarope de açúcar comum)",
-    "Açúcar Demerara (contém mais minerais e é mais benéfico para a saúde)"
+    "Açúcar refinado",
+    "Açúcar Demerara"
   ];
 
   // Lista completa de drinks (sem categorias)
   const drinksOptions = [
-    "Vibrante",
+    "Vibrante (Autoral)",
     "Aperol Spritz",
     "Cosmopolitan",
     "Fitzgerald",
@@ -75,7 +75,7 @@ export function StepForm3() {
     : [];
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {/* Tipo de Copos e Taças */}
       <div className="md:flex w-full gap-4 my-4">
         <Field label="Tipo de Copos e Taças">

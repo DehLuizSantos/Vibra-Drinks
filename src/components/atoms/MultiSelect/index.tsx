@@ -125,27 +125,27 @@ export function MultiSelect({
           </div>
 
           {/* Options list */}
-          <div className="overflow-y-auto h-90">
+          <div className="overflow-y-auto h-90 ">
             {filteredOptions.length === 0
               ? <div className="p-4 text-center text-white-400 text-sm">
-                  Nenhum drink encontrado
-                </div>
+                Nenhum drink encontrado
+              </div>
               : filteredOptions.map(option =>
-                  <label
-                    key={option}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gold/10 cursor-pointer transition-colors"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={value.includes(option)}
-                      onChange={() => toggleOption(option)}
-                      className="accent-gold w-4 h-4 cursor-pointer"
-                    />
-                    <span className="text-white-500 text-sm flex-1">
-                      {option}
-                    </span>
-                  </label>
-                )}
+                <label
+                  key={option}
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-gold/10 cursor-pointer transition-colors"
+                >
+                  <input
+                    type="checkbox"
+                    checked={value.includes(option)}
+                    onChange={() => toggleOption(option)}
+                    className="accent-gold w-4 h-4 cursor-pointer"
+                  />
+                  <span className="text-white-500 text-sm flex-1">
+                    {option}
+                  </span>
+                </label>
+              )}
           </div>
         </div>}
     </div>

@@ -1,3 +1,4 @@
+import AnimateOnScroll from "@/components/atoms/FadeInSection";
 import HeroSectionAbout from "@/components/organisms/HeroSectionAbout";
 import SectionOpinion from "@/components/organisms/SectionOpinion";
 import SectionService from "@/components/organisms/SectionService";
@@ -6,19 +7,43 @@ export default function Home() {
   return (
     <div className="noise-bg border border-r-2 border-l-2 border-yellow-20 bg-black-500">
       <div className="md:w-360 mx-auto">
-        {/* Hero Section */}
+        {/* Hero Section - Entrada Dramática */}
         <section id="sobre" className="bg-black-500 scroll-mt-20">
-          <HeroSectionAbout />
+          <AnimateOnScroll
+            variant="dramatic"
+            duration={900}
+            threshold={0.2}
+            delay={100}
+            once={false} // Anima toda vez que entrar
+          >
+            <HeroSectionAbout />
+          </AnimateOnScroll>
         </section>
 
-        {/* Services Section */}
+        { }
         <section id="servicos" className="noise-bg py-60 scroll-mt-20">
-          <SectionService />
+          <AnimateOnScroll
+            variant="fade"
+            duration={800}
+            delay={100}
+            threshold={0.3}
+            once={false}
+          >
+            <SectionService />
+          </AnimateOnScroll>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - Scale com bounce */}
         <section id="opiniao" className="py-60 scroll-mt-20">
-          <SectionOpinion />
+          <AnimateOnScroll
+            variant="slide"
+            duration={700}
+            delay={100}
+            threshold={0.25}
+            once={false}
+          >
+            <SectionOpinion />
+          </AnimateOnScroll>
         </section>
       </div>
     </div>

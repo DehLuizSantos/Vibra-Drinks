@@ -21,7 +21,7 @@ export default function NavbarDesktop() {
 
   const getLinkClass = (sectionId: string) => {
     const baseClass =
-      "text-white-300 display-font hover:text-gold transition-colors text-sm tracking-wider cursor-pointer pb-2";
+      "text-white-300 display-marcellus hover:text-gold transition-colors text-sm tracking-wider cursor-pointer pb-2";
     const activeClass =
       activeSection === sectionId
         ? "text-gold border-b-2 border-gold"
@@ -55,7 +55,7 @@ export default function NavbarDesktop() {
       </a>
       <Link
         href="/orcamento"
-        className="bg-black-500 display-font text-pink-100 px-6 py-2 text-sm font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
+        className="bg-black-500 display-marcellus text-pink-100 px-6 py-2 text-sm font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
       >
         Solicitar Orçamento
       </Link>

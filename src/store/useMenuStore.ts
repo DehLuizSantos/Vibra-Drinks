@@ -16,7 +16,7 @@ const allItems: CardItem[] = [
       "Festa animal! O bar não parou um segundo e, mesmo assim, não tinha fila. O Moscow Mule deles é diferenciado e o atendimento dos bartenders é nota 10, super animados. Com certeza vou chamar para os próximos eventos da turma",
     image: "/images/festa1.jpg",
     name: "Ricardo Fonseca",
-    type: "intimos",
+    type: "aniversarios",
     eventDescription: "Aniversário de 30 Anos"
   },
   {
@@ -40,7 +40,7 @@ const allItems: CardItem[] = [
       "A Vibra Drinks deu um show na nossa formatura. Os drinks autorais são muito criativos e a apresentação (copos e guarnições) é de alto nível. Só não dou 5 estrelas porque a noite passou rápido demais e eu queria ter provado o cardápio inteiro! Sensacional",
     image: "/images/Gabriela_e_lucas.png",
     name: "Lucas Oliveira",
-    type: "intimos",
+    type: "aniversarios",
     eventDescription: "Festa de Formatura"
   }
 ];
@@ -49,8 +49,8 @@ interface AppState {
   allItems: CardItem[];
   filteredItems: CardItem[];
   currentIndex: number;
-  menuType: "casamento" | "corporativos" | "intimos";
-  setMenuType: (menu: "casamento" | "corporativos" | "intimos") => void;
+  menuType: "casamento" | "corporativos" | "aniversarios";
+  setMenuType: (menu: "casamento" | "corporativos" | "aniversarios") => void;
   setCurrentIndex: (index: number) => void;
   next: () => void;
   prev: () => void;

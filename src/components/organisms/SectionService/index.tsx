@@ -7,7 +7,7 @@ export default function SectionService() {
     "Mais de dez drinks em seu cardápio exclusivo",
     "Nossa equipe é treinada para ser o ponto alto da hospitalidade do seu evento",
     "Copos e taças personalizadas que compõem a estética da sua festa",
-    "Menor preço hora do setor",
+    "Destilados de marcas consagradas e frutas selecionadas para um perfil sensorial impecável",
     "Criação de um drink exclusivo e uma performace especial, para marcar o drink principal",
     "Maxima entrega, com investimento inteligente"
   ];
@@ -16,7 +16,7 @@ export default function SectionService() {
       <div className="md:flex align-center justify-between gap-10 text-center md:text-start">
         <div className="text-center md:text-start md:w-138] ">
           <div className="border-gradient-bottom ">
-            <h2 className="text-2xl px-4 text-pink-100 py-8 display-font md:text-4xl md:w-135  md:px-0">
+            <h2 className="text-2xl px-4 text-gold py-8 display-font md:text-4xl md:w-135  md:px-0">
               Valor acessível Qualidade de excelencia
             </h2>
           </div>

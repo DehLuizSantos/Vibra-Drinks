@@ -5,9 +5,9 @@ export default function HeroSectionAbout() {
   return (
     <section className="md:flex items-center justify-between md:p-24">
       <div className="p-8 text-center md:text-start max-w-lg">
-        <div className="text-4xl text-pink-100 display-font md:text-5xl">
+        <div className="text-4xl text-gold display-font md:text-5xl">
           <p>VIBRA</p>
-          <p>Drinks</p>
+          <p>DRINKS</p>
         </div>
         <h1 className="display-marcellus text-2xl mt-8 text-white-300 md:text-4xl">
           SERVIÇO DE BARMAN ESPECIALIZADO EM EVENTOS PESSOAIS E CORPORATIVOS

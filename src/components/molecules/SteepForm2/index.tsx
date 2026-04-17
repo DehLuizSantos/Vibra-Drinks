@@ -5,13 +5,11 @@ import { useFormStore } from "@/store/useFormOrcamentoStore";
 export function StepForm2() {
   const { step2, updateStep2 } = useFormStore();
 
-  console.log(step2);
-
   const handleChange = (field: keyof typeof step2, value: string) => {
     updateStep2({ [field]: value });
   };
 
-  const duracaoOptions = ["4", "8", "10", "12"];
+  const duracaoOptions = ["1", "2", "3", "4","5","6","7","8","9", "10","11", "12"];
 
   return (
     <div className="md:flex flex-wrap max-w-160 gap-3.5">

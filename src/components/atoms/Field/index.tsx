@@ -21,8 +21,8 @@ export function Field({
   tooltipPosition = "top"
 }: FieldProps) {
   return (
-    <div className="flex flex-col display-font text-white-500 w-full md:w-full">
-      <div className="flex items-center justify-between">
+    <div className={`flex flex-col display-font text-white-500 w-full md:w-full` }>
+      <div className={`flex items-center justify-between`}>
         <label className={labelClass}>
           {label}
         </label>

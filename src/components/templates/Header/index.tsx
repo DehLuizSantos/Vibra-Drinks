@@ -16,7 +16,6 @@ export default function Header() {
     const header = document.querySelector('header');
     if (header) {
       setHeaderHeight(header.offsetHeight);
-      // Adiciona CSS custom property para o offset
       document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
     }
   }, []);
@@ -28,8 +27,8 @@ export default function Header() {
         <Link href="/" className="text-gold font-bold text-xl tracking-widest flex
         justify-center items-center">
           <Image src={'/Logo.svg'} alt="Vibra Drinks" width={50} height={89} />
-          <p className="text-xs  display-font text-bold bg-[linear-gradient(180deg,#996A01_100%,#FFB001_10%)] bg-clip-text text-transparent">
-            Drinks com alma
+          <p className="text-xs  display-marcellus text-bold bg-[linear-gradient(180deg,#996A01_100%,#FFB001_10%)] bg-clip-text text-transparent">
+            Qualidade que eleva o seu Evento
           </p>
          
         </Link>

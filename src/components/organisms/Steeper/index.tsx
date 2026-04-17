@@ -14,7 +14,7 @@ export const inputClass =
 
 const steps = [
   { number: 1, label: "Informações pessoais" },
-  { number: 2, label: "Informações evento" },
+  { number: 2, label: "Informações do evento" },
   { number: 3, label: "Variáveis do evento" }
 ];
 
@@ -206,9 +206,9 @@ export default function Steeper() {
             
             <button
               onClick={handleNext}
-              className={`border cursor-pointer border-gold bg-pink-300 p-6 text-white-500 rounded-2xl w-full flex text-center drop-shadow-[0_5px_5px_rgba(255,176,1,0.4)] md:h-20 ${
+              className={`border cursor-pointer border-white-500 bg-gold p-6 text-white-500 rounded-2xl w-full flex text-center drop-shadow-[0_5px_5px_rgba(255,176,1,0.4)] md:h-20 ${
                 currentStep === steps.length
-                  ? 'bg-green-600 hover:border-2 text-white'
+                  ? 'bg-gold hover:border-2 text-white'
                   : 'bg-gold hover:border-2 text-black'
               }`}
             >

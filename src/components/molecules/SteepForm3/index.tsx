@@ -43,7 +43,7 @@ export function StepForm3() {
     { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
     { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
     { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
-    { name: "Margarita", description: drinksDescriptions["Margarita"] },
+    { name: "OLD FASHIONED", description: drinksDescriptions["OLD FASHIONED"] },
     { name: "Mojito", description: drinksDescriptions["Mojito"] },
     { name: "Muscle Mule", description: drinksDescriptions["Muscle Mule"] },
     { name: "Negroni", description: drinksDescriptions["Negroni"] },
@@ -95,7 +95,7 @@ export function StepForm3() {
         </Field>
 
         {/* Tipo de Bar */}
-        <Field label="Tipo de Bar">
+        <Field label="Modelo de bar">
           <select
             className={inputClass}
             value={step3["Tipo de Bar"] || ""}
@@ -152,7 +152,7 @@ export function StepForm3() {
       </div>
 
       <div className="md:flex gap-4 my-4 w-full">
-        <Field label="Tipo de Xarope / Açúcar" hasTooltip tooltipMessage="Açucar refinado (Xarope de açucar comum) ou Açucar Demerara (contém mais minerais e é mais benéfico para a saúde)" tooltipPosition="left">
+        <Field label="Tipo de Xarope / Açúcar">
           <select
             className={inputClass}
             value={step3["Tipo de Xarope / Açúcar"] || ""}

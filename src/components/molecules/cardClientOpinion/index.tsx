@@ -6,7 +6,7 @@ import { useAppMenuStore } from "@/store/useMenuStore";
 
 export type CardItem = {
   name: string;
-  type: "casamento" | "corporativos" | "intimos";
+  type: "casamento" | "corporativos" | "aniversarios";
   eventDescription: string;
   image: string;
   description: string;

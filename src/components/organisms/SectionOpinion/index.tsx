@@ -10,7 +10,7 @@ export default function SectionOpinion() {
       <div className="md:flex align-center justify-around text-center md:text-start gap-10">
         <div className="">
           <div className="border-gradient-bottom text-center md:text-start">
-            <h2 className="text-2xl px-4 text-pink-100 py-8 display-font md:text-5xl md:w-135 md:px-0">
+            <h2 className="text-2xl px-4 text-gold py-8 display-font md:text-5xl md:w-135 md:px-0">
               A opinião de quem vive a excelência
             </h2>
           </div>

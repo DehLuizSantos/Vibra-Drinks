@@ -6,7 +6,7 @@ import { useAppMenuStore } from "@/store/useMenuStore";
 const menuItems = [
   { id: "casamento", label: "Casamentos" },
   { id: "corporativos", label: "Corporativos" },
-  { id: "intimos", label: "Íntimos" }
+  { id: "aniversarios", label: "ANIVERSÁRIOS" }
 ] as const;
 
 export default function MenuOpiniao() {

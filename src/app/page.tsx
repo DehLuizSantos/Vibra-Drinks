@@ -5,7 +5,7 @@ import SectionService from "@/components/organisms/SectionService";
 
 export default function Home() {
   return (
-    <div className="noise-bg border border-r-2 border-l-2 border-yellow-20 bg-black-500">
+    <div className="noise-bg border border-r-2 border-l-2 border-gold bg-black-500">
       <div className="md:w-360 mx-auto">
         {/* Hero Section - Entrada Dramática */}
         <section id="sobre" className="bg-black-500 scroll-mt-20">

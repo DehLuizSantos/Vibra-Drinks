@@ -28,7 +28,7 @@ export default function Header() {
         justify-center items-center">
           <Image src={'/Logo.svg'} alt="Vibra Drinks" width={50} height={89} />
           <p className="text-xs  display-marcellus text-bold bg-[linear-gradient(180deg,#996A01_100%,#FFB001_10%)] bg-clip-text text-transparent">
-            Qualidade que eleva o seu Evento
+            QUALIDADE QUE ELEVA SEU EVENTO
           </p>
          
         </Link>

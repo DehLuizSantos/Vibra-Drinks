@@ -56,7 +56,7 @@ export default function Footer() {
                 TELEFONE:{" "}
               </span>
               <span className="text-white-500 display-marcellus text-sm">
-                +55 11 94641-9170
+                +55 11 93913-8223
               </span>
             </div>
             <div className="my-4">
@@ -67,14 +67,7 @@ export default function Footer() {
                 vibradrinksbar@gmail.com
               </span>
             </div>
-            <div className="">
-              <span className="text-gold display-marcellus text-sm">
-                ENDEREÇO:{" "}
-              </span>
-              <span className="text-white-500 display-marcellus text-sm">
-                Rua Calixto de almeida, 785
-              </span>
-            </div>
+          
           </div>
         </section>
         <section className="flex items-center justify-start mt-14 gap-3 md:mt-0">

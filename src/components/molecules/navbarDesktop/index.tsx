@@ -31,7 +31,7 @@ export default function NavbarDesktop() {
   };
 
   return (
-    <nav className="hidden md:flex items-center gap-20">
+    <nav className="hidden md:flex items-center gap-6 lg:gap-10 xl:gap-16">
       <a
         href="#sobre"
         onClick={e => handleClick(e, "sobre")}
@@ -55,7 +55,7 @@ export default function NavbarDesktop() {
       </a>
       <Link
         href="/orcamento"
-        className="bg-black-500 display-marcellus text-white px-6 py-2 text-lg font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
+        className="bg-gold display-marcellus text-white px-6 py-2 text-lg font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-2xl"
       >
         Solicitar Orçamento
       </Link>

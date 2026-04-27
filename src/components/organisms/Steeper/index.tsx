@@ -32,15 +32,15 @@ export default function Steeper() {
   const readImage = () => {
     const images = [
       {
-        image: "/images/orcamento/section1.png",
+        image: "/images/orcamento/section1.jpg",
         alt: "Drinks"
       },
       {
-        image: "/images/orcamento/section2.png",
+        image: "/images/orcamento/section2.jpg",
         alt: "Drinks"
       },
       {
-        image: "/images/orcamento/section3.png",
+        image: "/images/orcamento/section3.jpg",
         alt: "Drinks"
       }
     ];
@@ -111,12 +111,12 @@ export default function Steeper() {
 
   return (
     <div className="w-full relative md:flex md:flex-row-reverse">
-      <div className="mx-auto relative w-82.5 h-82.5 md:w-140 md:h-140 md:bottom-35 md:left-35">
+      <div className="mx-auto relative w-82.5 h-82.5 md:w-[38vw] md:h-[38vw] xl:w-140 xl:h-140 md:bottom-50 md:left-10 xl:bottom-35 xl:left-35 rounded-full overflow-hidden border-b-3 border-gold">
         <Image
           src={readImage().image}
           fill
           alt={readImage().alt}
-          className="mx-auto my-8"
+          className="object-cover"
         />
       </div>
       <div className="mt-12">

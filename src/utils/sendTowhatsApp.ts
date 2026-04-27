@@ -142,7 +142,7 @@ export const generateWhatsAppMessage = (data: FormData): string => {
 
 // Função para enviar para o WhatsApp
 export const sendToWhatsApp = (data: FormData): void => {
-  const phoneNumber = "5511946419170";
+  const phoneNumber = "5511939138223";
   const message = generateWhatsAppMessage(data);
   const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${message}&type=phone_number&app_absent=0`;
 

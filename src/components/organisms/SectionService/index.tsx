@@ -12,18 +12,18 @@ export default function SectionService() {
     "Maxima entrega, com investimento inteligente"
   ];
   return (
-    <section className="md:p-24">
+    <section className="md:p-16 xl:p-24">
       <div className="md:flex align-center justify-between gap-10 text-center md:text-start">
-        <div className="text-center md:text-start md:w-138] ">
+        <div className="text-center md:text-start md:flex-1 md:min-w-0">
           <div className="border-gradient-bottom ">
-            <h2 className="text-2xl px-4 text-gold py-8 display-font md:text-4xl md:w-135  md:px-0">
+            <h2 className="text-2xl px-4 text-gold py-8 display-font md:text-4xl md:w-full md:px-0">
               Valor acessível Qualidade de excelencia
             </h2>
           </div>
-          <p className="px-3.5 py-8 text-white-500 display-marcellus md:text-2xl md:px-0 md:w-135md:py-3.5">
+          <p className="px-3.5 py-8 text-white-500 display-marcellus md:text-2xl md:px-0 md:py-3.5">
             Flexibilizamos para você fechar negocio sem preocupações
           </p>
-          <div className="w-full h-55 relative md:h-112.5 md:w-170">
+          <div className="w-full h-55 relative md:h-[38vw] xl:h-112.5">
             <Image
               src="/images/section2.png"
               alt="drinks com alma"
@@ -33,7 +33,7 @@ export default function SectionService() {
           </div>
         </div>
 
-        <div className="p-7 md:flex flex-col align-start justify-between column ">
+        <div className="p-7 md:flex flex-col align-start justify-between column md:flex-1 md:min-w-0">
           <div className="">
             <h3 className="my-3 text-3xl text-white-500 display-marcellus">
               Nosso jeito de servir

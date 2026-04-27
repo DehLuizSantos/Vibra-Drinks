@@ -19,7 +19,6 @@ export default function OrcamentoPage() {
         once={false} // Anima toda vez que entrar
       >
         <div className="max-w-360 mx-auto">
-
           <div className="border-gradient-bottom text-center md:text-start max-w-3xl" >
             <h1 className="text-start text-2xl px-3 text-gold py-8 display-marcellus md:text-5xl md:w-135  md:px-0">
               Solicite um orçamento

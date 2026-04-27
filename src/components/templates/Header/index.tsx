@@ -22,8 +22,8 @@ export default function Header() {
 
 
   return (
-    <header className="bg-black-300 text-white-500 sticky top-0 rouded-lg z-50 border-gold border-2 ">
-      <div className="max-w-9xl p-15 flex items-center justify-around">
+    <header className="bg-black-300 text-white-500 sticky top-0 rounded-lg z-50 border-gold border-2 right-0 w-full">
+      <div className="px-6 py-4 md:px-10 lg:px-16 flex items-center justify-between gap-6">
         <Link href="/" className="text-gold font-bold text-xl tracking-widest flex
         justify-center items-center">
           <Image src={'/Logo.svg'} alt="Vibra Drinks" width={50} height={89} />

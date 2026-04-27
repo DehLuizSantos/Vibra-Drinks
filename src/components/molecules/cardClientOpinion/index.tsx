@@ -27,7 +27,7 @@ export default function CardClientOpinion() {
   if (!hasItems) {
     return (
       <div
-        className="relative w-full h-110 rounded-tl-[90px] rounded-tr-[90px] rounded-br-[60px] rounded-bl-[60px] overflow-hidden md:w-155 md:h-130 flex items-center justify-center"
+        className="relative w-full h-110 rounded-tl-[90px] rounded-tr-[90px] rounded-br-[60px] rounded-bl-[60px] overflow-hidden lg:w-155 lg:h-130 flex items-center justify-center"
         style={{
           border: "2px solid transparent",
           background:

@@ -19,7 +19,7 @@ export default function HeroSectionAbout() {
       </div>
       <div className="relative w-80 h-80 mx-auto md:w-[38vw] md:h-[38vw] xl:w-178 xl:h-178 border-b-2 border-gold rounded-full overflow-hidden">
         <Image
-          src="/images/section1.png"
+          src="/images/section1.jpg"
           alt="Alto padrão não é uma exigência, é o nosso ponto de partida"
           fill
           className="object-cover"

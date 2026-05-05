@@ -38,29 +38,32 @@ export function StepForm3() {
   ];
 
   // Lista de drinks com suas descrições
-  const drinksOptions = [
-    { name: "Vibrante (Autoral)", description: drinksDescriptions["Vibrante (Autoral)"] },
-    { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
-    { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
-    { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
-    { name: "OLD FASHIONED", description: drinksDescriptions["OLD FASHIONED"] },
-    { name: "Mojito", description: drinksDescriptions["Mojito"] },
-    { name: "Muscle Mule", description: drinksDescriptions["Muscle Mule"] },
-    { name: "Negroni", description: drinksDescriptions["Negroni"] },
-    { name: "Sex on the Beach", description: drinksDescriptions["Sex on the Beach"] },
-    { name: "Whiskey Sour", description: drinksDescriptions["Whiskey Sour"] },
-    { name: "Batidas", description: drinksDescriptions["Batidas"] },
-    { name: "Espanhola", description: drinksDescriptions["Espanhola"] },
-    { name: "Maracujack", description: drinksDescriptions["Maracujack"] },
-    { name: "Piña Colada", description: drinksDescriptions["Piña Colada"] },
-    { name: "Gin & Tônica Tradicional", description: drinksDescriptions["Gin & Tônica Tradicional"] },
-    { name: "Gin & Tônica Frutas Vermelhas", description: drinksDescriptions["Gin & Tônica Frutas Vermelhas"] },
-    { name: "Gin & Tônica Cítrico", description: drinksDescriptions["Gin & Tônica Cítrico"] },
-    { name: "Gin & Tônica Lichia", description: drinksDescriptions["Gin & Tônica Lichia"] },
-    { name: "Gin & Tônica Maçã Verde", description: drinksDescriptions["Gin & Tônica Maçã Verde"] },
-    { name: "Gin & Tônica Tinto", description: drinksDescriptions["Gin & Tônica Tinto"] },
-    { name: "Caipirinha", description: drinksDescriptions["Caipirinha"] }
-  ];
+const drinksOptions = [
+  { name: "Negroni", description: drinksDescriptions["Negroni"] },
+  { name: "Mojito", description: drinksDescriptions["Mojito"] },
+  { name: "Piña Colada", description: drinksDescriptions["Piña Colada"] },
+  { name: "Espanhola", description: drinksDescriptions["Espanhola"] },
+  { name: "Margarita", description: drinksDescriptions["Margarita"] },
+  { name: "Old Fashioned", description: drinksDescriptions["Old Fashioned"] },
+  { name: "Maracujack", description: drinksDescriptions["Maracujack"] },
+  { name: "Sex on the Beach", description: drinksDescriptions["Sex on the Beach"] },
+  { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
+  { name: "Whiskey Sour", description: drinksDescriptions["Whiskey Sour"] },
+  { name: "Lagoa Azul", description: drinksDescriptions["Lagoa Azul"] },
+  { name: "Gin Tônica Tradicional", description: drinksDescriptions["Gin Tônica Tradicional"] },
+  { name: "Muscle Mule", description: drinksDescriptions["Muscle Mule"] },
+  { name: "Gin Tônica Frutas Vermelhas", description: drinksDescriptions["Gin Tônica Frutas Vermelhas"] },
+  { name: "Gin Tônica Cítrico", description: drinksDescriptions["Gin Tônica Cítrico"] },
+  { name: "Gin Tônica Lichia", description: drinksDescriptions["Gin Tônica Lichia"] },
+  { name: "Gin Tônica Maçã Verde", description: drinksDescriptions["Gin Tônica Maçã Verde"] },
+  { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
+  { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
+  { name: "Caipirinhas (4 Frutas)", description: drinksDescriptions["Caipirinhas (4 Frutas)"] },
+  { name: "Gin Tônica Violeta", description: drinksDescriptions["Gin Tônica Violeta"] },
+  { name: "Vibrante (Autoral)", description: drinksDescriptions["Vibrante (Autoral)"] },
+  { name: "Caipirinhas (7 Frutas)", description: drinksDescriptions["Caipirinhas (7 Frutas)"] },
+  { name: "Batida de Maracujá, Morango e Abacaxi", description: drinksDescriptions["Batida de Maracujá, Morango e Abacaxi"] }
+];
 
   const handleChange = (field: string, value: string) => {
     updateStep3(field, value);

@@ -84,7 +84,7 @@ export default function NavbarMobile() {
       <Link
         href="/orcamento"
         onClick={() => setMenuOpen(false)}
-        className="mt-30 bg-black-500 display-font w-50 text-pink-100 py-2 text-sm font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-lg mx-auto"
+        className="mt-30 bg-gold display-font w-50 text-white-500 py-2 text-sm font-bold hover:outline-1 outline-amber-50 transition-opacity rounded-lg mx-auto"
       >
         Faça um orçamento
       </Link>

@@ -24,7 +24,10 @@ export function StepForm2() {
             <option value="">Selecione...</option>
             <option value="casamento">Casamento</option>
             <option value="corporativo">Corporativo</option>
-            <option value="intimo">Íntimo</option>
+            <option value="intimo">Aniversário</option>
+            <option value="esportivo">Evento Esportivo</option>
+            <option value="show">Show</option>
+            <option value="outro">Outro</option>
           </select>
         </Field>
 

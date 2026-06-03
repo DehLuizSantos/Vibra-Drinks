@@ -32,38 +32,68 @@ export function StepForm3() {
   const tagsOptions = ["Sim", "Não"];
 
   // Opções para Tipo de Xarope / Açúcar
-  const acucarOptions = [
-    "Açúcar refinado",
-    "Açúcar Demerara"
-  ];
+  const acucarOptions = ["Açúcar refinado", "Açúcar Demerara"];
 
   // Lista de drinks com suas descrições
-const drinksOptions = [
-  { name: "Negroni", description: drinksDescriptions["Negroni"] },
-  { name: "Mojito", description: drinksDescriptions["Mojito"] },
-  { name: "Piña Colada", description: drinksDescriptions["Piña Colada"] },
-  { name: "Espanhola", description: drinksDescriptions["Espanhola"] },
-  { name: "Margarita", description: drinksDescriptions["Margarita"] },
-  { name: "Old Fashioned", description: drinksDescriptions["Old Fashioned"] },
-  { name: "Maracujack", description: drinksDescriptions["Maracujack"] },
-  { name: "Sex on the Beach", description: drinksDescriptions["Sex on the Beach"] },
-  { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
-  { name: "Whiskey Sour", description: drinksDescriptions["Whiskey Sour"] },
-  { name: "Lagoa Azul", description: drinksDescriptions["Lagoa Azul"] },
-  { name: "Gin Tônica Tradicional", description: drinksDescriptions["Gin Tônica Tradicional"] },
-  { name: "Muscle Mule", description: drinksDescriptions["Muscle Mule"] },
-  { name: "Gin Tônica Frutas Vermelhas", description: drinksDescriptions["Gin Tônica Frutas Vermelhas"] },
-  { name: "Gin Tônica Cítrico", description: drinksDescriptions["Gin Tônica Cítrico"] },
-  { name: "Gin Tônica Lichia", description: drinksDescriptions["Gin Tônica Lichia"] },
-  { name: "Gin Tônica Maçã Verde", description: drinksDescriptions["Gin Tônica Maçã Verde"] },
-  { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
-  { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
-  { name: "Caipirinhas (4 Frutas)", description: drinksDescriptions["Caipirinhas (4 Frutas)"] },
-  { name: "Gin Tônica Violeta", description: drinksDescriptions["Gin Tônica Violeta"] },
-  { name: "Vibrante (Autoral)", description: drinksDescriptions["Vibrante (Autoral)"] },
-  { name: "Caipirinhas (7 Frutas)", description: drinksDescriptions["Caipirinhas (7 Frutas)"] },
-  { name: "Batida de Maracujá, Morango e Abacaxi", description: drinksDescriptions["Batida de Maracujá, Morango e Abacaxi"] }
-];
+  const drinksOptions = [
+    { name: "Negroni", description: drinksDescriptions["Negroni"] },
+    { name: "Mojito", description: drinksDescriptions["Mojito"] },
+    { name: "Piña Colada", description: drinksDescriptions["Piña Colada"] },
+    { name: "Espanhola", description: drinksDescriptions["Espanhola"] },
+    { name: "Margarita", description: drinksDescriptions["Margarita"] },
+    { name: "Old Fashioned", description: drinksDescriptions["Old Fashioned"] },
+    { name: "Maracujack", description: drinksDescriptions["Maracujack"] },
+    {
+      name: "Sex on the Beach",
+      description: drinksDescriptions["Sex on the Beach"]
+    },
+    { name: "Aperol Spritz", description: drinksDescriptions["Aperol Spritz"] },
+    { name: "Whiskey Sour", description: drinksDescriptions["Whiskey Sour"] },
+    { name: "Lagoa Azul", description: drinksDescriptions["Lagoa Azul"] },
+    {
+      name: "Gin Tônica Tradicional",
+      description: drinksDescriptions["Gin Tônica Tradicional"]
+    },
+    { name: "Moscow Mule", description: drinksDescriptions["Moscow Mule"] },
+    {
+      name: "Gin Tônica Frutas Vermelhas",
+      description: drinksDescriptions["Gin Tônica Frutas Vermelhas"]
+    },
+    {
+      name: "Gin Tônica Cítrico",
+      description: drinksDescriptions["Gin Tônica Cítrico"]
+    },
+    {
+      name: "Gin Tônica Lichia",
+      description: drinksDescriptions["Gin Tônica Lichia"]
+    },
+    {
+      name: "Gin Tônica Maçã Verde",
+      description: drinksDescriptions["Gin Tônica Maçã Verde"]
+    },
+    { name: "Fitzgerald", description: drinksDescriptions["Fitzgerald"] },
+    { name: "Cosmopolitan", description: drinksDescriptions["Cosmopolitan"] },
+    {
+      name: "Caipirinhas (4 Frutas)",
+      description: drinksDescriptions["Caipirinhas (4 Frutas)"]
+    },
+    {
+      name: "Gin Tônica Violeta",
+      description: drinksDescriptions["Gin Tônica Violeta"]
+    },
+    {
+      name: "Vibrante (Autoral)",
+      description: drinksDescriptions["Vibrante (Autoral)"]
+    },
+    {
+      name: "Caipirinhas (7 Frutas)",
+      description: drinksDescriptions["Caipirinhas (7 Frutas)"]
+    },
+    {
+      name: "Batida de Maracujá, Morango e Abacaxi",
+      description: drinksDescriptions["Batida de Maracujá, Morango e Abacaxi"]
+    }
+  ];
 
   const handleChange = (field: string, value: string) => {
     updateStep3(field, value);
@@ -86,14 +116,15 @@ const drinksOptions = [
           <select
             className={inputClass}
             value={step3["Tipo de Copos e Taças"] || ""}
-            onChange={e => handleChange("Tipo de Copos e Taças", e.target.value)}
+            onChange={e =>
+              handleChange("Tipo de Copos e Taças", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {coposOptions.map(option => (
+            {coposOptions.map(option =>
               <option key={option} value={option}>
                 {option}
               </option>
-            ))}
+            )}
           </select>
         </Field>
 
@@ -105,11 +136,11 @@ const drinksOptions = [
             onChange={e => handleChange("Tipo de Bar", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {barOptions.map(option => (
+            {barOptions.map(option =>
               <option key={option} value={option}>
                 {option}
               </option>
-            ))}
+            )}
           </select>
         </Field>
       </div>
@@ -123,18 +154,23 @@ const drinksOptions = [
             onChange={e => handleChange("Quantidade de Drinks", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {quantidadeDrinksOptions.map(option => (
+            {quantidadeDrinksOptions.map(option =>
               <option key={option} value={option}>
                 {option}
               </option>
-            ))}
+            )}
           </select>
         </Field>
 
         {/* Tags Personalizadas */}
-        <Field label="Tags Personalizadas" hasTooltip tooltipMessage="Frases divertidas que enfeitam os copos e taças" tooltipPosition="left">
+        <Field
+          label="Tags Personalizadas"
+          hasTooltip
+          tooltipMessage="Frases divertidas que enfeitam os copos e taças"
+          tooltipPosition="left"
+        >
           <div className="flex gap-6 mt-2">
-            {tagsOptions.map(option => (
+            {tagsOptions.map(option =>
               <label
                 key={option}
                 className="flex items-center gap-2 display-marcellus text-white-500 text-sm cursor-pointer"
@@ -144,12 +180,13 @@ const drinksOptions = [
                   name="tagsPersonalizadas"
                   value={option}
                   checked={step3["Tags Personalizadas"] === option}
-                  onChange={e => handleChange("Tags Personalizadas", e.target.value)}
+                  onChange={e =>
+                    handleChange("Tags Personalizadas", e.target.value)}
                   className="accent-gold"
                 />
                 {option}
               </label>
-            ))}
+            )}
           </div>
         </Field>
       </div>
@@ -159,14 +196,15 @@ const drinksOptions = [
           <select
             className={inputClass}
             value={step3["Tipo de Xarope / Açúcar"] || ""}
-            onChange={e => handleChange("Tipo de Xarope / Açúcar", e.target.value)}
+            onChange={e =>
+              handleChange("Tipo de Xarope / Açúcar", e.target.value)}
           >
             <option value="">Selecione...</option>
-            {acucarOptions.map(option => (
+            {acucarOptions.map(option =>
               <option key={option} value={option}>
                 {option}
               </option>
-            ))}
+            )}
           </select>
         </Field>
 

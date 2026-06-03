@@ -2,6 +2,9 @@ import AnimateOnScroll from "@/components/atoms/FadeInSection";
 import HeroSectionAbout from "@/components/organisms/HeroSectionAbout";
 import SectionOpinion from "@/components/organisms/SectionOpinion";
 import SectionService from "@/components/organisms/SectionService";
+import { siteMetadata } from "./seo";
+
+export const metadata = siteMetadata;
 
 export default function Home() {
   return (
@@ -20,7 +23,7 @@ export default function Home() {
           </AnimateOnScroll>
         </section>
 
-        { }
+        {}
         <section id="servicos" className="noise-bg py-60 scroll-mt-20">
           <AnimateOnScroll
             variant="fade"

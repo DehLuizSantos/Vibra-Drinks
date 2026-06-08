@@ -59,7 +59,10 @@ export const generateWhatsAppMessage = (data: FormData): string => {
   const tipoEventoMap: { [key: string]: string } = {
     casamento: "Casamento",
     corporativo: "Corporativo",
-    intimo: "Íntimo"
+    intimo: "Aniversário",
+    esportivo: "Evento Esportivo",
+    show: "Show",
+    outro: "Outro"
   };
   message += `🎭 *Tipo de Evento:* ${tipoEventoMap[step2.tipoEvento] ||
     step2.tipoEvento ||

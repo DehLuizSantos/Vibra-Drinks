@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Field } from "@/components/atoms/Field";
 import { inputClass } from "@/components/organisms/Steeper";
+import FieldErrorTooltip from "@/components/atoms/FieldErrorTooltip";
 import {
   ImagePreviewModal,
   PictureCard,
@@ -10,7 +11,7 @@ import {
   type UploadItem
 } from "@/components/molecules/pictureCardUpload";
 import { ACCEPT_IMAGE_ATTR, validateImageFile } from "@/lib/storage/imageRules";
-import { MAX_PHOTOS_PER_EVENT } from "@/lib/validation/event";
+import { MAX_PHOTOS_PER_EVENT, validateEventInput } from "@/lib/validation/event";
 import { uploadImage } from "@/utils/uploadImage";
 import {
   EVENT_TYPES,
@@ -57,9 +58,12 @@ function toCover(event?: VibraEvent | null): UploadItem | null {
   return event?.image ? { key: "cover-initial", url: event.image, status: "done", progress: 100 } : null;
 }
 
-function FieldError({ message }: { message?: string }) {
-  return message ? <p className="display-marcellus text-pink-100 text-xs mt-1">{message}</p> : null;
-}
+/** Erro de validação do campo, exibido como balão (o contêiner precisa ser `relative`). */
+const FieldError = FieldErrorTooltip;
+
+/** Classe do input com destaque vermelho quando o campo tem erro. */
+const fieldClass = (hasError: boolean, extra = "") =>
+  `${inputClass} ${extra} ${hasError ? "border-red-400! bg-red-400/5" : ""}`;
 
 /** Orientações de resolução exibidas ao lado dos campos de imagem. */
 function ImageGuidelines({ title, items }: { title: string; items: { label: string; value: string }[] }) {
@@ -105,12 +109,35 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
   const filesRef = useRef(new Map<string, File>()); // arquivos originais, para "tentar novamente"
   const objectUrlsRef = useRef<string[]>([]);
   const coverReplaceRef = useRef<HTMLInputElement>(null);
+  // Imagens enviadas ao R2 nesta tela e ainda não salvas no evento
+  const pendingUploadsRef = useRef(new Set<string>());
+  // Itens (capa/fotos) que ainda estão no formulário — para descartar envios de itens já removidos
+  const liveKeysRef = useRef(new Set<string>());
 
-  // Libera as prévias locais ao sair do formulário
+  /**
+   * Apaga do R2 imagens enviadas aqui que não serão usadas. Só age sobre envios desta tela
+   * ainda não salvos (e o servidor confere que nenhum evento usa a imagem antes de apagar).
+   */
+  const discardUploads = useCallback((urls: string[]) => {
+    const pending = urls.filter(url => pendingUploadsRef.current.delete(url));
+    if (pending.length === 0) return;
+    fetch("/api/admin/uploads", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ urls: pending }),
+      keepalive: true // conclui mesmo se a página estiver sendo fechada
+    }).catch(() => undefined);
+  }, []);
+
+  // Ao sair do formulário: libera as prévias locais e descarta envios não salvos
   useEffect(() => {
     const urls = objectUrlsRef.current;
-    return () => urls.forEach(url => URL.revokeObjectURL(url));
-  }, []);
+    const pending = pendingUploadsRef.current;
+    return () => {
+      urls.forEach(url => URL.revokeObjectURL(url));
+      if (pending.size > 0) discardUploads([...pending]);
+    };
+  }, [discardUploads]);
 
   const makePreview = (file: File) => {
     const url = URL.createObjectURL(file);
@@ -119,36 +146,77 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
   };
 
   /** Valida e envia um arquivo, reportando progresso/resultado via `apply`. */
-  const runUpload = useCallback((file: File, apply: (patch: Partial<UploadItem>) => void) => {
-    const invalid = validateImageFile(file);
-    if (invalid) {
-      apply({ status: "error", error: invalid, progress: 0 });
-      return;
-    }
-    apply({ status: "uploading", progress: 0, error: undefined });
-    uploadImage(file, progress => apply({ progress }))
-      .then(url => apply({ status: "done", url, progress: 100 }))
-      .catch((err: Error) => apply({ status: "error", error: err.message }));
-  }, []);
+  const runUpload = useCallback(
+    (file: File, key: string, apply: (patch: Partial<UploadItem>) => void) => {
+      const invalid = validateImageFile(file);
+      if (invalid) {
+        apply({ status: "error", error: invalid, progress: 0 });
+        return;
+      }
+      apply({ status: "uploading", progress: 0, error: undefined });
+      uploadImage(file, progress => apply({ progress }))
+        .then(url => {
+          pendingUploadsRef.current.add(url);
+          // Item removido/trocado enquanto enviava → o arquivo não será usado
+          if (!liveKeysRef.current.has(key)) {
+            discardUploads([url]);
+            return;
+          }
+          apply({ status: "done", url, progress: 100 });
+        })
+        .catch((err: Error) => apply({ status: "error", error: err.message }));
+    },
+    [discardUploads]
+  );
 
-  const update = <K extends keyof FormState>(key: K, value: FormState[K]) =>
+  /** Remove o balão de erro de um campo (chamado quando o usuário o corrige). */
+  const clearError = (key: string) =>
+    setErrors(prev => {
+      if (!(key in prev)) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+
+  /** Erros das fotos usam a posição na lista — ao remover/reordenar, deixam de valer. */
+  const clearPhotoErrors = () =>
+    setErrors(prev => Object.fromEntries(Object.entries(prev).filter(([key]) => !key.startsWith("photos"))));
+
+  const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm(prev => ({ ...prev, [key]: value }));
+    clearError(key as string);
+  };
 
   /* ---------- Capa ---------- */
 
+  /** Tira a capa atual do formulário (descartando do R2 se foi enviada aqui e não salva). */
+  const dropCover = () => {
+    if (!cover) return;
+    liveKeysRef.current.delete(cover.key);
+    if (cover.url) discardUploads([cover.url]);
+  };
+
   const handleCoverFile = (file: File) => {
+    dropCover();
+    clearError("image");
     const key = newKey();
     filesRef.current.set(key, file);
+    liveKeysRef.current.add(key);
     setCover({ key, url: "", preview: makePreview(file), status: "uploading", progress: 0, name: file.name });
     // Só aplica no item atual (ignora resultados de uma troca anterior ainda em andamento)
-    runUpload(file, patch => setCover(prev => (prev?.key === key ? { ...prev, ...patch } : prev)));
+    runUpload(file, key, patch => setCover(prev => (prev?.key === key ? { ...prev, ...patch } : prev)));
+  };
+
+  const removeCover = () => {
+    dropCover();
+    setCover(null);
   };
 
   const retryCover = () => {
     const file = cover && filesRef.current.get(cover.key);
     if (!file || !cover) return;
     const key = cover.key;
-    runUpload(file, patch => setCover(prev => (prev?.key === key ? { ...prev, ...patch } : prev)));
+    runUpload(file, key, patch => setCover(prev => (prev?.key === key ? { ...prev, ...patch } : prev)));
   };
 
   /* ---------- Fotos do carrossel ---------- */
@@ -168,6 +236,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
     const drafts: PhotoDraft[] = accepted.map(file => {
       const key = newKey();
       filesRef.current.set(key, file);
+      liveKeysRef.current.add(key);
       return {
         key,
         url: "",
@@ -180,20 +249,27 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       };
     });
     setForm(prev => ({ ...prev, photos: [...prev.photos, ...drafts] }));
-    drafts.forEach((draft, i) => runUpload(accepted[i], patch => patchPhoto(draft.key, patch)));
+    drafts.forEach((draft, i) => runUpload(accepted[i], draft.key, patch => patchPhoto(draft.key, patch)));
   };
 
   const retryPhoto = (key: string) => {
     const file = filesRef.current.get(key);
-    if (file) runUpload(file, patch => patchPhoto(key, patch));
+    if (file) runUpload(file, key, patch => patchPhoto(key, patch));
   };
 
   const removePhoto = (key: string) => {
     filesRef.current.delete(key);
+    liveKeysRef.current.delete(key);
+    const photo = form.photos.find(p => p.key === key);
+    // Foto enviada agora e ainda não salva → apaga do R2. Fotos já salvas só são
+    // apagadas do R2 quando o evento for salvo sem elas (o servidor cuida disso).
+    if (photo?.url) discardUploads([photo.url]);
+    clearPhotoErrors();
     setForm(prev => ({ ...prev, photos: prev.photos.filter(p => p.key !== key) }));
   };
 
-  const movePhoto = (index: number, direction: -1 | 1) =>
+  const movePhoto = (index: number, direction: -1 | 1) => {
+    clearPhotoErrors();
     setForm(prev => {
       const target = index + direction;
       if (target < 0 || target >= prev.photos.length) return prev;
@@ -201,8 +277,27 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       [photos[index], photos[target]] = [photos[target], photos[index]];
       return { ...prev, photos };
     });
+  };
 
   /* ---------- Envio do formulário ---------- */
+
+  // Quando todos os campos destacados forem corrigidos, some o aviso geral
+  useEffect(() => {
+    if (Object.keys(errors).length === 0) {
+      setFormError(prev => (prev === "Revise os campos destacados." ? null : prev));
+    }
+  }, [errors]);
+
+  /** Exibe os balões de erro e rola até o primeiro campo com problema. */
+  const showErrors = (next: Record<string, string>) => {
+    setErrors(next);
+    setFormError("Revise os campos destacados.");
+    requestAnimationFrame(() => {
+      const first = document.querySelector<HTMLElement>("[data-field-error]");
+      first?.parentElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+      first?.parentElement?.querySelector<HTMLElement>("input, select, textarea")?.focus({ preventScroll: true });
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -225,6 +320,13 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       photos: form.photos.map(({ title, phrase, url }) => ({ title, phrase, url }))
     };
 
+    // Valida no navegador com as mesmas regras do servidor (o servidor valida de novo)
+    const validation = validateEventInput(payload);
+    if (!validation.ok) {
+      showErrors(validation.errors);
+      return;
+    }
+
     setSaving(true);
     try {
       const res = await fetch(isEditing ? `/api/admin/events/${event!.id}` : "/api/admin/events", {
@@ -234,12 +336,14 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setErrors(data.errors ?? {});
+        if (data.errors) showErrors(data.errors);
         setFormError(
           res.status === 401 ? "Sua sessão expirou. Entre novamente." : data.error ?? "Erro ao salvar."
         );
         return;
       }
+      // Salvo: os envios agora pertencem ao evento e não devem ser descartados
+      pendingUploadsRef.current.clear();
       onSaved(data.event);
     } catch {
       setFormError("Falha de conexão. Tente novamente.");
@@ -257,10 +361,11 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       </h2>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div>
+        <div className="relative">
           <Field label="Nome do cliente">
             <input
-              className={inputClass}
+              className={fieldClass(Boolean(errors.name))}
+              aria-invalid={Boolean(errors.name)}
               value={form.name}
               onChange={e => update("name", e.target.value)}
               placeholder="Ex.: Juliana Martins"
@@ -270,10 +375,11 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
           <FieldError message={errors.name} />
         </div>
 
-        <div>
+        <div className="relative">
           <Field label="Tipo de evento">
             <select
-              className={inputClass}
+              className={fieldClass(Boolean(errors.type))}
+              aria-invalid={Boolean(errors.type)}
               value={form.type}
               onChange={e => update("type", e.target.value as EventType)}
             >
@@ -290,10 +396,11 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
           <FieldError message={errors.type} />
         </div>
 
-        <div className="md:col-span-2">
+        <div className="relative md:col-span-2">
           <Field label="Descrição do evento">
             <input
-              className={inputClass}
+              className={fieldClass(Boolean(errors.eventDescription))}
+              aria-invalid={Boolean(errors.eventDescription)}
               value={form.eventDescription}
               onChange={e => update("eventDescription", e.target.value)}
               placeholder="Ex.: Casamento Elegante"
@@ -308,6 +415,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       <div>
         <Field label="Imagem de capa (fundo do depoimento)">
           <div className="mt-2 flex flex-col gap-4 md:flex-row md:items-start">
+            <div className={`relative w-fit rounded-xl ${errors.image ? "ring-2 ring-red-400" : ""}`}>
             {cover ? (
               <PictureCard
                 item={cover}
@@ -315,7 +423,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
                 badge="Capa"
                 onPreview={() => setPreviewSrc(cover.preview ?? cover.url)}
                 onReplace={() => coverReplaceRef.current?.click()}
-                onRemove={() => setCover(null)}
+                onRemove={removeCover}
                 onRetry={filesRef.current.has(cover.key) ? retryCover : undefined}
               />
             ) : (
@@ -326,6 +434,8 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
                 className="w-56 h-40 md:w-64 md:h-48"
               />
             )}
+            <FieldError message={errors.image} />
+            </div>
             <input
               ref={coverReplaceRef}
               type="file"
@@ -340,13 +450,13 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
             <ImageGuidelines title="Tamanho ideal da capa" items={COVER_GUIDELINES} />
           </div>
         </Field>
-        <FieldError message={errors.image} />
       </div>
 
-      <div>
+      <div className="relative">
         <Field label="Depoimento do cliente">
           <textarea
-            className={`${inputClass} min-h-32 resize-y`}
+            className={fieldClass(Boolean(errors.description), "min-h-32 resize-y")}
+            aria-invalid={Boolean(errors.description)}
             value={form.description}
             onChange={e => update("description", e.target.value)}
             placeholder="O que o cliente disse sobre a experiência"
@@ -371,7 +481,11 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
           </p>
         </div>
         <ImageGuidelines title="Tamanho ideal das fotos" items={PHOTO_GUIDELINES} />
-        <FieldError message={errors.photos} />
+        {errors.photos && (
+          <div className="relative -mt-2 h-0">
+            <FieldError message={errors.photos} />
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-3">
           {form.photos.map((photo, index) => (
@@ -410,22 +524,30 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
                   <span className="display-font text-gold text-sm">Foto {index + 1}</span>
                 </div>
                 <div className="grid flex-1 gap-3 md:grid-cols-2">
-                  <div>
+                  <div className="relative">
                     <input
-                      className={inputClass}
+                      className={fieldClass(Boolean(errors[`photos.${index}.title`]))}
+                      aria-invalid={Boolean(errors[`photos.${index}.title`])}
                       value={photo.title}
-                      onChange={e => patchPhoto(photo.key, { title: e.target.value })}
+                      onChange={e => {
+                        patchPhoto(photo.key, { title: e.target.value });
+                        clearError(`photos.${index}.title`);
+                      }}
                       placeholder="Título *"
                       aria-label={`Título da foto ${index + 1}`}
                       maxLength={80}
                     />
                     <FieldError message={errors[`photos.${index}.title`]} />
                   </div>
-                  <div>
+                  <div className="relative">
                     <input
-                      className={inputClass}
+                      className={fieldClass(Boolean(errors[`photos.${index}.phrase`]))}
+                      aria-invalid={Boolean(errors[`photos.${index}.phrase`])}
                       value={photo.phrase}
-                      onChange={e => patchPhoto(photo.key, { phrase: e.target.value })}
+                      onChange={e => {
+                        patchPhoto(photo.key, { phrase: e.target.value });
+                        clearError(`photos.${index}.phrase`);
+                      }}
                       placeholder="Frase (opcional)"
                       aria-label={`Frase da foto ${index + 1}`}
                       maxLength={200}

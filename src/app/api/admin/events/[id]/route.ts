@@ -1,7 +1,8 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, after, type NextRequest } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getAdminSession } from "@/lib/auth/session";
-import { deleteEvent, getEvent, updateEvent } from "@/lib/repositories/eventsRepository";
+import { deleteEvent, getEvent, imageUrlsOf, updateEvent } from "@/lib/repositories/eventsRepository";
+import { deleteUnreferencedImages } from "@/lib/storage/imageCleanup";
 import { validateEventInput } from "@/lib/validation/event";
 
 type Context = { params: Promise<{ id: string }> };
@@ -25,21 +26,32 @@ export async function PUT(request: NextRequest, { params }: Context) {
   }
 
   const { id } = await params;
+  const previous = await getEvent(id);
   const event = await updateEvent(id, result.data);
-  if (event) {
-    revalidatePath("/");
-    revalidatePath(`/eventos/${id}`);
+  if (!event) return notFound();
+
+  revalidatePath("/");
+  revalidatePath(`/eventos/${id}`);
+
+  // Imagens que saíram do evento (fotos removidas / capa trocada) → apaga do R2 após responder
+  if (previous) {
+    const kept = new Set(imageUrlsOf(event));
+    const removed = imageUrlsOf(previous).filter(url => !kept.has(url));
+    if (removed.length) after(() => deleteUnreferencedImages(removed));
   }
-  return event ? NextResponse.json({ event }) : notFound();
+  return NextResponse.json({ event });
 }
 
 export async function DELETE(_request: NextRequest, { params }: Context) {
   if (!(await getAdminSession())) return unauthorized();
   const { id } = await params;
-  const deleted = await deleteEvent(id);
-  if (deleted) {
-    revalidatePath("/");
-    revalidatePath(`/eventos/${id}`);
-  }
-  return deleted ? NextResponse.json({ ok: true }) : notFound();
+  const event = await getEvent(id);
+  if (!event || !(await deleteEvent(id))) return notFound();
+
+  revalidatePath("/");
+  revalidatePath(`/eventos/${id}`);
+
+  // Apaga a capa e as fotos do evento no R2 após responder
+  after(() => deleteUnreferencedImages(imageUrlsOf(event)));
+  return NextResponse.json({ ok: true });
 }

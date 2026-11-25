@@ -75,3 +75,22 @@ export async function deleteEvent(id: string): Promise<boolean> {
   const rows = await db()`DELETE FROM events WHERE id = ${id} RETURNING id`;
   return rows.length > 0;
 }
+
+/** Todas as URLs de imagem de um evento (capa + fotos do carrossel). */
+export function imageUrlsOf(event: Pick<VibraEvent, "image" | "photos">): string[] {
+  return [event.image, ...event.photos.map(photo => photo.url)];
+}
+
+/** Das URLs informadas, retorna as que ainda são usadas por algum evento (capa ou foto). */
+export async function findReferencedImageUrls(urls: string[]): Promise<Set<string>> {
+  if (urls.length === 0) return new Set();
+  const rows = await db()`
+    SELECT u.url
+    FROM unnest(${urls}::text[]) AS u(url)
+    WHERE EXISTS (
+      SELECT 1 FROM events e
+      WHERE e.image = u.url
+         OR e.photos @> jsonb_build_array(jsonb_build_object('url', u.url))
+    )`;
+  return new Set(rows.map(row => row.url as string));
+}

@@ -1,9 +1,10 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectsCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { ALLOWED_IMAGE_TYPES } from "@/lib/storage/imageRules";
 
+const UPLOAD_PREFIX = "eventos/";
 
 let client: S3Client | null = null;
 
@@ -34,7 +35,7 @@ function r2(): S3Client {
 export async function createImageUpload(contentType: string) {
   const ext = ALLOWED_IMAGE_TYPES[contentType];
   const now = new Date();
-  const key = `eventos/${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, "0")}/${randomUUID()}.${ext}`;
+  const key = `${UPLOAD_PREFIX}${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, "0")}/${randomUUID()}.${ext}`;
 
   const uploadUrl = await getSignedUrl(
     r2(),
@@ -44,4 +45,33 @@ export async function createImageUpload(contentType: string) {
 
   const publicUrl = `${env("R2_PUBLIC_URL").replace(/\/+$/, "")}/${key}`;
   return { uploadUrl, publicUrl };
+}
+
+/**
+ * Converte a URL pública em chave do bucket — só para arquivos que o painel enviou
+ * (mesmo domínio do R2_PUBLIC_URL e dentro de "eventos/"). Qualquer outra URL retorna null.
+ */
+export function r2KeyFromUrl(url: string): string | null {
+  const base = process.env.R2_PUBLIC_URL?.replace(/\/+$/, "");
+  if (!base || !url.startsWith(`${base}/`)) return null;
+  const key = decodeURIComponent(url.slice(base.length + 1));
+  if (!key.startsWith(UPLOAD_PREFIX) || key.includes("..")) return null;
+  return key;
+}
+
+/** Apaga objetos do bucket (em lotes de até 1000, limite da API). Retorna quantos foram apagados. */
+export async function deleteR2Objects(keys: string[]): Promise<number> {
+  let deleted = 0;
+  for (let i = 0; i < keys.length; i += 1000) {
+    const batch = keys.slice(i, i + 1000);
+    const result = await r2().send(
+      new DeleteObjectsCommand({
+        Bucket: env("R2_BUCKET"),
+        Delete: { Objects: batch.map(Key => ({ Key })), Quiet: true }
+      })
+    );
+    if (result.Errors?.length) console.error("R2: falha ao apagar alguns arquivos:", result.Errors);
+    deleted += batch.length - (result.Errors?.length ?? 0);
+  }
+  return deleted;
 }

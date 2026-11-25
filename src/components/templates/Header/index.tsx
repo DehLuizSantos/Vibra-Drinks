@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAppStore } from "@/store/useStore";
+import { useSessionStore } from "@/store/useSessionStore";
 import Image from "next/image";
 import MenuBurguer from "@/components/atoms/menuBurguer";
 import NavbarMobile from "@/components/molecules/navbarMobile";
@@ -10,7 +11,12 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   const { isMenuOpen, toggleMenu } = useAppStore();
+  const fetchSession = useSessionStore(state => state.fetchSession);
    const [, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    fetchSession();
+  }, [fetchSession]);
 
   useEffect(() => {
     const header = document.querySelector('header');

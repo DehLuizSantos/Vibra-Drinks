@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import AdminNavTab from "@/components/molecules/adminNavTab";
 
 export default function NavbarDesktop() {
   const { handleNavigation } = useSmoothScroll();
@@ -59,6 +60,7 @@ export default function NavbarDesktop() {
       >
         Solicitar Orçamento
       </Link>
+      <AdminNavTab />
     </nav>
   );
 }

@@ -5,6 +5,7 @@ import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import Image from "next/image";
 import Link from "next/link";
+import AdminNavTab from "@/components/molecules/adminNavTab";
 
 export default function NavbarMobile() {
   const { setMenuOpen } = useAppStore();
@@ -88,6 +89,7 @@ export default function NavbarMobile() {
       >
         Faça um orçamento
       </Link>
+      <AdminNavTab variant="mobile" onNavigate={() => setMenuOpen(false)} />
     </nav>
   );
 }

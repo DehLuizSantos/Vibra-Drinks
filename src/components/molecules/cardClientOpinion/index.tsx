@@ -3,14 +3,12 @@
 import Image from "next/image";
 import Divider from "@/components/atoms/divider";
 import { useAppMenuStore } from "@/store/useMenuStore";
+import type { VibraEvent } from "@/types/event";
 
-export type CardItem = {
-  name: string;
-  type: "casamento" | "corporativos" | "aniversarios";
-  eventDescription: string;
-  image: string;
-  description: string;
-};
+export type CardItem = Pick<
+  VibraEvent,
+  "name" | "type" | "eventDescription" | "image" | "description"
+>;
 
 export default function CardClientOpinion() {
   const {
@@ -43,7 +41,7 @@ export default function CardClientOpinion() {
 
   return (
     <div
-      className="relative w-full h-110 rounded-tl-[90px] rounded-tr-[90px] rounded-br-[60px] rounded-bl-[60px] overflow-hidden md:w-155 md:h-130"
+      className="relative m-4 w-full h-110 rounded-tl-[90px] rounded-tr-[90px] rounded-br-[60px] rounded-bl-[60px] overflow-hidden md:w-155 md:h-130"
       style={{
         border: "2px solid transparent",
         background:

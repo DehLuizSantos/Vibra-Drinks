@@ -29,24 +29,37 @@ export default function AnimateOnScroll({
 
   useEffect(
     () => {
+      const element = elementRef.current;
+      if (!element) return;
+
       const observer = new IntersectionObserver(
         ([entry]) => {
-          setIsVisible(entry.isIntersecting);
+          // Seções mais altas que a tela nunca atingem uma porcentagem alta de visibilidade;
+          // por isso também consideramos visível quando a seção ocupa boa parte da viewport.
+          const coversViewport =
+            entry.rootBounds !== null &&
+            entry.intersectionRect.height >= entry.rootBounds.height * threshold;
+          const visible =
+            entry.isIntersecting && (entry.intersectionRatio >= threshold || coversViewport);
+
+          if (visible && once) {
+            setIsVisible(true);
+            observer.disconnect(); // "once": anima uma vez e permanece visível
+            return;
+          }
+          setIsVisible(visible);
         },
-        { threshold, rootMargin: "0px 0px -15% 0px" }
+        {
+          // Vários pontos de checagem para reavaliar a visibilidade durante a rolagem
+          threshold: [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+          rootMargin: "0px 0px -15% 0px"
+        }
       );
 
-      if (elementRef.current) {
-        observer.observe(elementRef.current);
-      }
-
-      return () => {
-        if (elementRef.current) {
-          observer.unobserve(elementRef.current);
-        }
-      };
+      observer.observe(element);
+      return () => observer.disconnect();
     },
-    [threshold]
+    [threshold, once]
   );
 
   // Estados de animação baseado na variante escolhida

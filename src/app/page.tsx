@@ -3,10 +3,26 @@ import HeroSectionAbout from "@/components/organisms/HeroSectionAbout";
 import SectionOpinion from "@/components/organisms/SectionOpinion";
 import SectionService from "@/components/organisms/SectionService";
 import { siteMetadata } from "./seo";
+import { listEvents } from "@/lib/repositories/eventsRepository";
+import type { VibraEvent } from "@/types/event";
 
 export const metadata = siteMetadata;
 
-export default function Home() {
+// Página estática regenerada a cada 60s (e na hora, quando o admin salva/exclui um evento).
+export const revalidate = 60;
+
+async function loadEvents(): Promise<VibraEvent[]> {
+  try {
+    return await listEvents();
+  } catch (err) {
+    console.error("Falha ao carregar eventos do banco:", err);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const events = await loadEvents();
+
   return (
     <div className="noise-bg border border-r-2 border-l-2 border-gold bg-black-500">
       <div className=" mx-auto">
@@ -45,7 +61,7 @@ export default function Home() {
             threshold={0.25}
             once={true}
           >
-            <SectionOpinion />
+            <SectionOpinion initialEvents={events} />
           </AnimateOnScroll>
         </section>
       </div>

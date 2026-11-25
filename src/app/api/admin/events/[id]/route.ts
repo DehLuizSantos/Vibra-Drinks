@@ -24,14 +24,22 @@ export async function PUT(request: NextRequest, { params }: Context) {
     return NextResponse.json({ error: "Dados inválidos.", errors: result.errors }, { status: 422 });
   }
 
-  const event = await updateEvent((await params).id, result.data);
-  if (event) revalidatePath("/");
+  const { id } = await params;
+  const event = await updateEvent(id, result.data);
+  if (event) {
+    revalidatePath("/");
+    revalidatePath(`/eventos/${id}`);
+  }
   return event ? NextResponse.json({ event }) : notFound();
 }
 
 export async function DELETE(_request: NextRequest, { params }: Context) {
   if (!(await getAdminSession())) return unauthorized();
-  const deleted = await deleteEvent((await params).id);
-  if (deleted) revalidatePath("/");
+  const { id } = await params;
+  const deleted = await deleteEvent(id);
+  if (deleted) {
+    revalidatePath("/");
+    revalidatePath(`/eventos/${id}`);
+  }
   return deleted ? NextResponse.json({ ok: true }) : notFound();
 }

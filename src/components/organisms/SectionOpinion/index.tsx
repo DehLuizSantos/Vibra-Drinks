@@ -1,9 +1,8 @@
 "use client";
 
 import ButtonCta from "@/components/molecules/buttonCta";
-import CardClientOpinion from "@/components/molecules/cardClientOpinion";
 import MenuOpiniao from "@/components/molecules/menuOpiniao";
-import PhotoGallery from "@/components/organisms/PhotoGallery";
+import EventSlider from "@/components/organisms/EventSlider";
 import { MenuStoreProvider } from "@/store/useMenuStore";
 import type { VibraEvent } from "@/types/event";
 
@@ -37,12 +36,12 @@ function SectionOpinionContent() {
         </div>
       </div>
 
-      <div className="flex justify-between flex-wrap">
-        <PhotoGallery />
-        <CardClientOpinion />
+      {/* Slider de eventos: um slide por evento do filtro selecionado */}
+      <div className="mt-4 mb-8">
+        <EventSlider />
       </div>
       {/* Botão de baixo: só abaixo de 1360px */}
-      <div className="w-full min-[1360px]:hidden">
+      <div className="w-full min-[1360px]:hidden p-4">
         <ButtonCta />
       </div>
     </section>

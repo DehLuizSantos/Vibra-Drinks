@@ -3,41 +3,16 @@
 
 import { createContext, createElement, useContext, useState } from "react";
 import { createStore, useStore, type StoreApi } from "zustand";
-import type { EventPhoto, EventType, VibraEvent } from "@/types/event";
-
-/** Foto da galeria com o contexto do evento ao qual pertence. */
-export type GalleryPhoto = EventPhoto & { eventName: string; eventDescription: string };
-
-/** Fotos de UM evento — a galeria mostra só as fotos do depoimento exibido no momento. */
-function photosOfEvent(event?: VibraEvent): GalleryPhoto[] {
-  if (!event) return [];
-  return event.photos.map(photo => ({
-    ...photo,
-    eventName: event.name,
-    eventDescription: event.eventDescription
-  }));
-}
-
-/** Estado derivado do evento selecionado (índice dentro do filtro atual). */
-function selectEvent(filteredItems: VibraEvent[], index: number) {
-  const currentEvent = filteredItems[index];
-  return {
-    currentIndex: index,
-    currentEventId: currentEvent?.id ?? null,
-    galleryPhotos: photosOfEvent(currentEvent)
-  };
-}
+import type { EventType, VibraEvent } from "@/types/event";
 
 function deriveFor(allItems: VibraEvent[], menu: EventType) {
   const filteredItems = allItems.filter(item => item.type === menu);
-  return { filteredItems, ...selectEvent(filteredItems, 0) };
+  return { filteredItems, currentIndex: 0 };
 }
 
 interface AppState {
   allItems: VibraEvent[];
   filteredItems: VibraEvent[];
-  galleryPhotos: GalleryPhoto[];
-  currentEventId: string | null;
   currentIndex: number;
   menuType: EventType;
   setMenuType: (menu: EventType) => void;
@@ -62,7 +37,7 @@ function createMenuStore(initialEvents: VibraEvent[]) {
     setCurrentIndex: index => {
       const { filteredItems } = get();
       if (index >= 0 && index < filteredItems.length) {
-        set(selectEvent(filteredItems, index));
+        set({ currentIndex: index });
       }
     },
 
@@ -70,7 +45,7 @@ function createMenuStore(initialEvents: VibraEvent[]) {
       const { filteredItems, currentIndex } = get();
       if (filteredItems.length === 0) return;
       const nextIndex = (currentIndex + 1) % filteredItems.length;
-      set(selectEvent(filteredItems, nextIndex));
+      set({ currentIndex: nextIndex });
     },
 
     prev: () => {
@@ -78,7 +53,7 @@ function createMenuStore(initialEvents: VibraEvent[]) {
       if (filteredItems.length === 0) return;
       const prevIndex =
         (currentIndex - 1 + filteredItems.length) % filteredItems.length;
-      set(selectEvent(filteredItems, prevIndex));
+      set({ currentIndex: prevIndex });
     }
   }));
 }

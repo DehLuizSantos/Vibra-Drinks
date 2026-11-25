@@ -109,3 +109,61 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #ffffff;
 }
 
+
+/* ===== Slider de eventos / Lightbox ===== */
+
+/* Partículas douradas flutuando sobre o slider */
+.vd-particle {
+  position: absolute;
+  bottom: -12px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 176, 1, 0.9) 0%, rgba(255, 176, 1, 0) 70%);
+  pointer-events: none;
+  animation: vd-float linear infinite;
+}
+
+@keyframes vd-float {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.6; }
+  100% { transform: translate3d(var(--vd-drift, 20px), -110vh, 0); opacity: 0; }
+}
+
+/* Barra de progresso do autoplay (o fim da animação avança o slide) */
+@keyframes vd-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.vd-progress {
+  transform-origin: left;
+  animation: vd-progress linear forwards;
+}
+
+/* Zoom lento da foto ativa (efeito Ken Burns) */
+@keyframes vd-kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+.vd-kenburns {
+  animation: vd-kenburns 9s ease-out forwards;
+}
+
+@keyframes vd-fade-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+.vd-fade-in {
+  animation: vd-fade-in 450ms ease-out;
+}
+
+.vd-outline-number {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 176, 1, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vd-particle,
+  .vd-kenburns {
+    animation: none;
+  }
+}

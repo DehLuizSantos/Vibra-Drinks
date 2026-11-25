@@ -61,6 +61,38 @@ function FieldError({ message }: { message?: string }) {
   return message ? <p className="display-marcellus text-pink-100 text-xs mt-1">{message}</p> : null;
 }
 
+/** Orientações de resolução exibidas ao lado dos campos de imagem. */
+function ImageGuidelines({ title, items }: { title: string; items: { label: string; value: string }[] }) {
+  return (
+    <aside className="rounded-xl border border-gold/30 bg-black-300/60 p-4 md:max-w-md">
+      <p className="display-marcellus mb-3 text-xs uppercase tracking-[0.2em] text-gold">{title}</p>
+      <dl className="flex flex-col gap-2">
+        {items.map(item => (
+          <div key={item.label} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+            <dt className="display-marcellus shrink-0 text-xs text-white-300/60 sm:w-28">{item.label}</dt>
+            <dd className="display-marcellus text-sm text-white-300">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
+  );
+}
+
+const COVER_GUIDELINES = [
+  { label: "Recomendado", value: "2400 × 1350 px (horizontal 16:9)" },
+  { label: "Mínimo", value: "1920 × 1080 px" },
+  { label: "Enquadramento", value: "Assunto principal no centro — no celular as laterais são cortadas." },
+  { label: "Formato", value: "JPG (qualidade 80–85%) ou WEBP · 300 KB a 3 MB · máx. 10 MB" }
+];
+
+const PHOTO_GUIDELINES = [
+  { label: "Recomendado", value: "1600 × 2000 px (vertical 4:5)" },
+  { label: "Também ok", value: "2000 × 2000 px (quadrada)" },
+  { label: "Mínimo", value: "1080 × 1350 px — abaixo de ~1000 px de largura a foto fica pixelada" },
+  { label: "Dica", value: "Envie a foto original (celular/câmera). Evite imagens salvas do Google, Instagram ou WhatsApp." },
+  { label: "Formato", value: "JPG (qualidade 80–85%) ou WEBP · 300 KB a 3 MB · máx. 10 MB" }
+];
+
 export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventFormProps) {
   const [form, setForm] = useState<FormState>(() => toFormState(event));
   const [cover, setCover] = useState<UploadItem | null>(() => toCover(event));
@@ -275,7 +307,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
       {/* Capa */}
       <div>
         <Field label="Imagem de capa (fundo do depoimento)">
-          <div className="mt-2">
+          <div className="mt-2 flex flex-col gap-4 md:flex-row md:items-start">
             {cover ? (
               <PictureCard
                 item={cover}
@@ -290,7 +322,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
               <UploadTrigger
                 onFiles={([file]) => handleCoverFile(file)}
                 label="Enviar capa"
-                hint="Clique ou arraste · até 10 MB"
+                hint="Clique ou arraste · 2400 × 1350 px"
                 className="w-56 h-40 md:w-64 md:h-48"
               />
             )}
@@ -305,6 +337,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
                 if (file) handleCoverFile(file);
               }}
             />
+            <ImageGuidelines title="Tamanho ideal da capa" items={COVER_GUIDELINES} />
           </div>
         </Field>
         <FieldError message={errors.image} />
@@ -333,10 +366,11 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
             </span>
           </legend>
           <p className="display-marcellus text-white-300/70 text-sm mt-1">
-            As fotos aparecem na galeria da página inicial, no filtro deste tipo de evento. Selecione várias de uma
-            vez ou arraste para o quadro.
+            As fotos aparecem na página do evento (botão &ldquo;Ver fotos&rdquo; no slider da página inicial).
+            Selecione várias de uma vez ou arraste para o quadro.
           </p>
         </div>
+        <ImageGuidelines title="Tamanho ideal das fotos" items={PHOTO_GUIDELINES} />
         <FieldError message={errors.photos} />
 
         <div className="flex flex-wrap gap-3">
@@ -353,7 +387,7 @@ export default function AdminEventForm({ event, onSaved, onCancel }: AdminEventF
             />
           ))}
           {photoCount < MAX_PHOTOS_PER_EVENT && (
-            <UploadTrigger onFiles={addPhotoFiles} multiple label="Enviar" hint="ou arraste aqui" />
+            <UploadTrigger onFiles={addPhotoFiles} multiple label="Enviar" hint="1600 × 2000 px" />
           )}
         </div>
 
